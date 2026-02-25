@@ -1,7 +1,7 @@
-export default function CoursesPage() {
+export default function Contact() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      /courses
+      /contact
     </div>
   );
 }

@@ -1,7 +1,7 @@
-export default function LoginPage() {
+export default function DashboardCourses() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      /login
+      /dashboard/courses
     </div>
   );
 }
