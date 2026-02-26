@@ -1,25 +1,18 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { LogoutResponse } from '../types/type';
 import { api } from '@/src/shared/lib/axios';
-import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/src/shared/types/type';
 
 const logoutApi = async (): Promise<LogoutResponse> => {
-  await api.post('/logout');
-  return {};
+  const response = await api.post('/logout');
+  return response.data;
 };
 
 export const useLogoutMutation = () => {
-  const router = useRouter();
-
-  return useMutation({
+  return useMutation<LogoutResponse, AxiosError<ErrorResponse>, void>({
     mutationFn: logoutApi,
-
-    onSuccess: () => {
-      useAuthStore.getState().setAccessToken(null);
-      router.replace('/');
-    },
   });
 };

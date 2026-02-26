@@ -4,12 +4,27 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
+  userId: number;
   accessToken: string;
 }
 
-export interface LogoutRequest {}
+export type LogoutRequest = Record<string, any>;
 
-export interface LogoutResponse {}
+export interface LogoutResponse {
+  success: boolean;
+  message?: string;
+}
+
+export interface RegisterRequest {
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface RegisterResponse {
+  userId: number;
+  message?: string;
+}
 
 export interface User {
   id: number;

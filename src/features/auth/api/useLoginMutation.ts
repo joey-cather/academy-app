@@ -1,10 +1,10 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { LoginRequest, LoginResponse } from '../types/type';
 import { api } from '@/src/shared/lib/axios';
-import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
+import { AxiosError } from 'axios';
+import { ErrorResponse } from '@/src/shared/types/type';
 
 const loginApi = async (data: LoginRequest): Promise<LoginResponse> => {
   const response = await api.post('/login', data);
@@ -12,14 +12,7 @@ const loginApi = async (data: LoginRequest): Promise<LoginResponse> => {
 };
 
 export const useLoginMutation = () => {
-  const router = useRouter();
-
-  return useMutation({
+  return useMutation<LoginResponse, AxiosError<ErrorResponse>, LoginRequest>({
     mutationFn: loginApi,
-
-    onSuccess: (data) => {
-      useAuthStore.getState().setAccessToken(data.accessToken);
-      router.replace('/');
-    },
   });
 };

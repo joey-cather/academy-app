@@ -4,24 +4,36 @@ import { useAuthStore } from '../hooks/useAuthStore';
 import { useLogoutMutation } from '@/src/features/auth/api/useLogoutMutation';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
+import axios from 'axios';
 
 export function Header() {
   const { accessToken } = useAuthStore();
 
-  const { mutate: logout } = useLogoutMutation();
+  const { mutateAsync: logout } = useLogoutMutation();
 
   const router = useRouter();
 
   const handleClickDashboard = useCallback(() => {
     if (!accessToken) {
+      alert('먼저 로그인해 주세요.');
       router.push('/login');
     } else {
       router.push('/dashboard');
     }
   }, [accessToken, router]);
 
-  const handleClickLogout = useCallback(() => {
-    logout();
+  const handleClickLogout = useCallback(async () => {
+    try {
+      const response = await logout();
+      if (response.success) {
+        useAuthStore.getState().setAccessToken(null);
+        router.replace('/');
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data.message);
+      }
+    }
   }, [logout]);
 
   return (
@@ -46,6 +58,9 @@ export function Header() {
             >
               대시보드
             </button>
+            <Link href="/contact" className="hover:text-zinc-900">
+              문의하기
+            </Link>
           </nav>
         </div>
         <div>
