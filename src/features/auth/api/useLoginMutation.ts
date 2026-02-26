@@ -4,9 +4,10 @@ import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { LoginRequest, LoginResponse } from '../types/type';
 import { api } from '@/src/shared/lib/axios';
+import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
 
 const loginApi = async (data: LoginRequest): Promise<LoginResponse> => {
-  const response = await api.post('/auth/login', data);
+  const response = await api.post('/login', data);
   return response.data;
 };
 
@@ -17,9 +18,7 @@ export const useLoginMutation = () => {
     mutationFn: loginApi,
 
     onSuccess: (data) => {
-      sessionStorage.setItem('accessToken', data.accessToken);
-      sessionStorage.setItem('refreshToken', data.refreshToken);
-
+      useAuthStore.getState().setAccessToken(data.accessToken);
       router.replace('/');
     },
   });
