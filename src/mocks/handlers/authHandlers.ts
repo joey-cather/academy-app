@@ -88,4 +88,23 @@ export const authHandlers = [
       );
     }
   ),
+
+  // 로그인 유저 정보 조회
+  http.post('/api/me', ({ request }) => {
+    const auth = request.headers.get('Authorization');
+
+    if (auth !== 'Bearer valid-access-token') {
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    return HttpResponse.json({
+      id: 1,
+      name: '홍길동',
+      email: 'test1@test.com',
+      password: '123123123',
+      role: 'student',
+      createdAt: '2026-02-20T10:15:30.000Z',
+      updatedAt: '2026-02-22T14:40:10.000Z',
+    });
+  }),
 ];
