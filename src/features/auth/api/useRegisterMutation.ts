@@ -2,21 +2,19 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { RegisterRequest, RegisterResponse } from '../types/type';
-import { api } from '@/src/shared/lib/axios';
-import { ErrorResponse } from '@/src/shared/types/type';
-import { AxiosError } from 'axios';
+import { ApiErrorResponse } from '@/src/shared/types/type';
+import { apiPost } from '@/src/shared/lib/apiClient';
 
-const registerApi = async (
-  data: RegisterRequest
-): Promise<RegisterResponse> => {
-  const response = await api.post('/register', data);
+const createUser = async (data: RegisterRequest): Promise<RegisterResponse> => {
+  const response = await apiPost<RegisterResponse, RegisterRequest>(
+    '/register',
+    data
+  );
   return response.data;
 };
 
 export const useRegisterMutation = () => {
-  return useMutation<
-    RegisterResponse,
-    AxiosError<ErrorResponse>,
-    RegisterRequest
-  >({ mutationFn: registerApi });
+  return useMutation<RegisterResponse, ApiErrorResponse, RegisterRequest>({
+    mutationFn: createUser,
+  });
 };

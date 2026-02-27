@@ -2,17 +2,16 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { LogoutResponse } from '../types/type';
-import { api } from '@/src/shared/lib/axios';
-import { AxiosError } from 'axios';
-import { ErrorResponse } from '@/src/shared/types/type';
+import { ApiErrorResponse } from '@/src/shared/types/type';
+import { apiPost } from '@/src/shared/lib/apiClient';
 
-const logoutApi = async (): Promise<LogoutResponse> => {
-  const response = await api.post('/logout');
+const logoutUser = async (): Promise<LogoutResponse> => {
+  const response = await apiPost<LogoutResponse, null>('/logout', null);
   return response.data;
 };
 
 export const useLogoutMutation = () => {
-  return useMutation<LogoutResponse, AxiosError<ErrorResponse>, void>({
-    mutationFn: logoutApi,
+  return useMutation<LogoutResponse, ApiErrorResponse, void>({
+    mutationFn: logoutUser,
   });
 };

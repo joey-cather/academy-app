@@ -1,9 +1,8 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { loginSchema, type LoginFormValues } from '../schemas/login.schema';
+import { LoginFormSchema, type LoginFormValues } from '../schemas/login.schema';
 import { useLoginMutation } from '../api/useLoginMutation';
 import { useCallback } from 'react';
-import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
 import { queryClient } from '@/src/shared/api/queryClient';
@@ -11,7 +10,7 @@ import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
 const useLoginForm = () => {
   const form = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
+    resolver: zodResolver(LoginFormSchema),
     defaultValues: { email: '', password: '' },
     mode: 'onSubmit',
   });
@@ -30,10 +29,10 @@ const useLoginForm = () => {
         queryClient.invalidateQueries({ queryKey: ['me'] });
         router.replace('/');
       } catch (error) {
-        if (axios.isAxiosError(error)) {
+        if (error instanceof Error) {
           notify({
             type: 'alert',
-            message: error.response?.data.message,
+            message: error.message,
           });
         }
       }

@@ -1,18 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  registerSchema,
+  RegisterFormSchema,
   type RegisterFormValues,
 } from '../schemas/register.schema';
 import { useRegisterMutation } from '../api/useRegisterMutation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
 const useRegisterForm = () => {
   const form = useForm<RegisterFormValues>({
-    resolver: zodResolver(registerSchema),
+    resolver: zodResolver(RegisterFormSchema),
     defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
     mode: 'onSubmit',
   });
@@ -36,10 +35,10 @@ const useRegisterForm = () => {
           },
         });
       } catch (error) {
-        if (axios.isAxiosError(error)) {
+        if (error instanceof Error) {
           notify({
             type: 'alert',
-            message: error.response?.data.message,
+            message: error.message,
           });
         }
       }

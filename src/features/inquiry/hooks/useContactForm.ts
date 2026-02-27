@@ -1,18 +1,17 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
-  contactSchema,
+  ContactFormSchema,
   type ContactFormValues,
 } from '../schemas/contact.schema';
 import { useContactMutation } from '../api/useContactMutation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import axios from 'axios';
 import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
 const useContactForm = () => {
   const form = useForm<ContactFormValues>({
-    resolver: zodResolver(contactSchema),
+    resolver: zodResolver(ContactFormSchema),
     defaultValues: { name: '', email: '', subject: '', message: '' },
     mode: 'onSubmit',
   });
@@ -36,10 +35,10 @@ const useContactForm = () => {
           },
         });
       } catch (error) {
-        if (axios.isAxiosError(error)) {
+        if (error instanceof Error) {
           notify({
             type: 'alert',
-            message: error.response?.data.message,
+            message: error.message,
           });
         }
       }

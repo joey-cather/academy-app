@@ -2,17 +2,16 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { LoginRequest, LoginResponse } from '../types/type';
-import { api } from '@/src/shared/lib/axios';
-import { AxiosError } from 'axios';
-import { ErrorResponse } from '@/src/shared/types/type';
+import { ApiErrorResponse } from '@/src/shared/types/type';
+import { apiPost } from '@/src/shared/lib/apiClient';
 
-const loginApi = async (data: LoginRequest): Promise<LoginResponse> => {
-  const response = await api.post('/login', data);
+const loginUser = async (data: LoginRequest): Promise<LoginResponse> => {
+  const response = await apiPost<LoginResponse, LoginRequest>('/login', data);
   return response.data;
 };
 
 export const useLoginMutation = () => {
-  return useMutation<LoginResponse, AxiosError<ErrorResponse>, LoginRequest>({
-    mutationFn: loginApi,
+  return useMutation<LoginResponse, ApiErrorResponse, LoginRequest>({
+    mutationFn: loginUser,
   });
 };

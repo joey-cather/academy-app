@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const registerSchema = z
+export const RegisterFormSchema = z
   .object({
     name: z.string().min(2, '이름은 최소 2자 이상이어야 합니다.'),
     email: z.string().email('메일 형식이 올바르지 않아요.'),
@@ -12,4 +12,4 @@ export const registerSchema = z
     path: ['confirmPassword'],
   });
 
-export type RegisterFormValues = z.infer<typeof registerSchema>;
+export type RegisterFormValues = z.infer<typeof RegisterFormSchema>;

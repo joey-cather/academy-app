@@ -4,7 +4,6 @@ import { useAuthStore } from '../hooks/useAuthStore';
 import { useLogoutMutation } from '@/src/features/auth/api/useLogoutMutation';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
-import axios from 'axios';
 import { queryClient } from '@/src/shared/api/queryClient';
 import { useNotification } from '../layouts/NotificationProvider';
 
@@ -40,10 +39,10 @@ export function Header() {
         router.replace('/');
       }
     } catch (error) {
-      if (axios.isAxiosError(error)) {
+      if (error instanceof Error) {
         notify({
           type: 'alert',
-          message: error.response?.data.message,
+          message: error.message,
         });
       }
     }

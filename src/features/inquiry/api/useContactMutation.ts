@@ -2,19 +2,21 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { ContactRequest, ContactResponse } from '../types/type';
-import { api } from '@/src/shared/lib/axios';
-import { ErrorResponse } from '@/src/shared/types/type';
-import { AxiosError } from 'axios';
+import { ApiErrorResponse } from '@/src/shared/types/type';
+import { apiPost } from '@/src/shared/lib/apiClient';
 
-const contactApi = async (data: ContactRequest): Promise<ContactResponse> => {
-  const response = await api.post('/contact', data);
+const createInquiry = async (
+  data: ContactRequest
+): Promise<ContactResponse> => {
+  const response = await apiPost<ContactResponse, ContactRequest>(
+    '/contact',
+    data
+  );
   return response.data;
 };
 
 export const useContactMutation = () => {
-  return useMutation<
-    ContactResponse,
-    AxiosError<ErrorResponse>,
-    ContactRequest
-  >({ mutationFn: contactApi });
+  return useMutation<ContactResponse, ApiErrorResponse, ContactRequest>({
+    mutationFn: createInquiry,
+  });
 };

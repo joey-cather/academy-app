@@ -22,8 +22,13 @@ export function ContactPage() {
     }
   }, [user, setValue]);
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (isError) return <div>에러 발생: {error?.message}</div>;
+  if (isLoading) return <p className="text-center mt-8">로딩 중...</p>;
+  if (isError)
+    return (
+      <p className="text-center mt-8 text-red-600">
+        에러 발생: {error?.message}
+      </p>
+    );
 
   return (
     <div className="w-full max-w-lg rounded-xl bg-white p-8 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-900 dark:ring-zinc-800">
