@@ -1,9 +1,9 @@
-import { RegisterForm } from '@/src/features/auth/components/RegisterForm';
+import { RegisterPage } from '@/src/features/auth/components/RegisterPage';
 
 export default function Register() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <RegisterForm />
+      <RegisterPage />
     </div>
   );
 }
