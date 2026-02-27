@@ -5,6 +5,7 @@ import {
   LogoutResponse,
   RegisterRequest,
   RegisterResponse,
+  User,
 } from '@/src/features/auth/types/type';
 import { ErrorResponse } from '@/src/shared/types/type';
 import { http, HttpResponse } from 'msw';
@@ -90,7 +91,7 @@ export const authHandlers = [
   ),
 
   // 로그인 유저 정보 조회
-  http.post('/api/me', ({ request }) => {
+  http.post<never, never, User | ErrorResponse>('/api/me', ({ request }) => {
     const auth = request.headers.get('Authorization');
 
     if (auth !== 'Bearer valid-access-token') {

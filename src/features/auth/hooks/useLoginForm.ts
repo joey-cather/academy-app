@@ -6,6 +6,7 @@ import { useCallback } from 'react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
+import { queryClient } from '@/src/shared/api/queryClient';
 
 const useLoginForm = () => {
   const form = useForm<LoginFormValues>({
@@ -23,6 +24,7 @@ const useLoginForm = () => {
       try {
         const response = await mutateAsync(values);
         useAuthStore.getState().setAccessToken(response.accessToken);
+        queryClient.invalidateQueries({ queryKey: ['me'] });
         router.replace('/');
       } catch (error) {
         if (axios.isAxiosError(error)) {

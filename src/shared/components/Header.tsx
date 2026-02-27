@@ -5,6 +5,7 @@ import { useLogoutMutation } from '@/src/features/auth/api/useLogoutMutation';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import axios from 'axios';
+import { queryClient } from '@/src/shared/api/queryClient';
 
 export function Header() {
   const { accessToken } = useAuthStore();
@@ -27,6 +28,7 @@ export function Header() {
       const response = await logout();
       if (response.success) {
         useAuthStore.getState().setAccessToken(null);
+        queryClient.invalidateQueries({ queryKey: ['me'] });
         router.replace('/');
       }
     } catch (error) {
