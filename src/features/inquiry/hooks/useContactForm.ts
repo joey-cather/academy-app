@@ -8,6 +8,7 @@ import { useContactMutation } from '../api/useContactMutation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
 const useContactForm = () => {
   const form = useForm<ContactFormValues>({
@@ -20,16 +21,26 @@ const useContactForm = () => {
 
   const router = useRouter();
 
+  const { notify } = useNotification();
+
   const onSubmit = useCallback(
     async (values: ContactFormValues) => {
       try {
         const response = await mutateAsync(values);
-        if (confirm(response.message)) {
-          router.replace('/');
-        }
+
+        notify({
+          type: 'alert',
+          message: response.message || '',
+          onConfirm: () => {
+            router.replace('/');
+          },
+        });
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          alert(error.response?.data.message);
+          notify({
+            type: 'alert',
+            message: error.response?.data.message,
+          });
         }
       }
     },

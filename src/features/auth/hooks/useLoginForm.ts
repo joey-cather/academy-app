@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
 import { queryClient } from '@/src/shared/api/queryClient';
+import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
 const useLoginForm = () => {
   const form = useForm<LoginFormValues>({
@@ -19,6 +20,8 @@ const useLoginForm = () => {
 
   const router = useRouter();
 
+  const { notify } = useNotification();
+
   const onSubmit = useCallback(
     async (values: LoginFormValues) => {
       try {
@@ -28,7 +31,10 @@ const useLoginForm = () => {
         router.replace('/');
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          alert(error.response?.data.message);
+          notify({
+            type: 'alert',
+            message: error.response?.data.message,
+          });
         }
       }
     },

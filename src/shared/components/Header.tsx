@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import axios from 'axios';
 import { queryClient } from '@/src/shared/api/queryClient';
+import { useNotification } from '../layouts/NotificationProvider';
 
 export function Header() {
   const { accessToken } = useAuthStore();
@@ -14,14 +15,21 @@ export function Header() {
 
   const router = useRouter();
 
+  const { notify } = useNotification();
+
   const handleClickDashboard = useCallback(() => {
     if (!accessToken) {
-      alert('먼저 로그인해 주세요.');
-      router.push('/login');
+      notify({
+        type: 'alert',
+        message: '먼저 로그인해 주세요.',
+        onConfirm: () => {
+          router.push('/login');
+        },
+      });
     } else {
       router.push('/dashboard');
     }
-  }, [accessToken, router]);
+  }, [accessToken, notify, router]);
 
   const handleClickLogout = useCallback(async () => {
     try {
@@ -33,7 +41,10 @@ export function Header() {
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        alert(error.response?.data.message);
+        notify({
+          type: 'alert',
+          message: error.response?.data.message,
+        });
       }
     }
   }, [logout]);

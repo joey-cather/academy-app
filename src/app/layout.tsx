@@ -4,6 +4,7 @@ import './globals.css';
 import { AppLayout } from '../shared/layouts/AppLayout';
 import ReactQueryProvider from '../shared/providers/ReactQueryProvider';
 import { MSWProvider } from '../shared/layouts/MSWProvider';
+import { NotificationProvider } from '../shared/layouts/NotificationProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -31,7 +32,9 @@ export default function RootLayout({
       >
         <MSWProvider>
           <ReactQueryProvider>
-            <AppLayout>{children}</AppLayout>
+            <NotificationProvider>
+              <AppLayout>{children}</AppLayout>
+            </NotificationProvider>
           </ReactQueryProvider>
         </MSWProvider>
       </body>

@@ -8,6 +8,7 @@ import { useRegisterMutation } from '../api/useRegisterMutation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
 const useRegisterForm = () => {
   const form = useForm<RegisterFormValues>({
@@ -20,16 +21,26 @@ const useRegisterForm = () => {
 
   const router = useRouter();
 
+  const { notify } = useNotification();
+
   const onSubmit = useCallback(
     async (values: RegisterFormValues) => {
       try {
         const response = await mutateAsync(values);
-        if (confirm(response.message)) {
-          router.replace('/login');
-        }
+
+        notify({
+          type: 'alert',
+          message: response.message || '',
+          onConfirm: () => {
+            router.replace('/login');
+          },
+        });
       } catch (error) {
         if (axios.isAxiosError(error)) {
-          alert(error.response?.data.message);
+          notify({
+            type: 'alert',
+            message: error.response?.data.message,
+          });
         }
       }
     },
