@@ -1,12 +1,15 @@
 import axios from 'axios';
 import { useAuthStore } from '../hooks/useAuthStore';
 
-export const api = axios.create({
+export const axiosInstance = axios.create({
   baseURL: '/api',
+  headers: {
+    'Content-Type': 'application/json',
+  },
   withCredentials: true,
 });
 
-api.interceptors.request.use((config) => {
+axiosInstance.interceptors.request.use((config) => {
   const token = useAuthStore.getState().accessToken;
 
   if (token) {
