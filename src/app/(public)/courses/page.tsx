@@ -1,7 +1,9 @@
+import CoursesPage from '@/src/features/course/components/CoursesPage';
+
 export default function Courses() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      /courses
+      <CoursesPage />
     </div>
   );
 }
