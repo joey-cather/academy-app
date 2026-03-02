@@ -1,19 +1,27 @@
-import { useQuery } from '@tanstack/react-query';
-import { Course, GetCoursesParams } from '../types/type';
-import { ApiErrorResponse } from '@/src/shared/types/type';
+import { useInfiniteQuery } from '@tanstack/react-query';
+import { Course, CourseCategory, GetCoursesParams } from '../types/type';
+import { ApiErrorResponse, PaginatedResponse } from '@/src/shared/types/type';
 import { apiGet } from '@/src/shared/lib/apiClient';
-import { courseQueryKeys } from './coursueQueryKeys';
+import { courseQueryKeys } from './coursesQueryKeys';
 
 export const getCourses = async (
   params: GetCoursesParams
-): Promise<Course[]> => {
-  const response = await apiGet<Course[]>('/courses', params);
+): Promise<PaginatedResponse<Course>> => {
+  const response = await apiGet<PaginatedResponse<Course>>('/courses', params);
   return response.data;
 };
+export const useCoursesQuery = (params: { category?: CourseCategory }) => {
+  const newParams = { ...params, page: 1, pageSize: 20 };
 
-export const useCoursesQuery = (params: GetCoursesParams) => {
-  return useQuery<Course[], ApiErrorResponse>({
-    queryKey: courseQueryKeys.list(params),
-    queryFn: () => getCourses(params),
+  return useInfiniteQuery<PaginatedResponse<Course>, ApiErrorResponse>({
+    queryKey: courseQueryKeys.list(newParams),
+    queryFn: ({ pageParam = 1 }) =>
+      getCourses({ ...newParams, page: pageParam as number }),
+    getNextPageParam: (lastPage) => {
+      const nextPage = lastPage.page + 1;
+      return nextPage <= lastPage.totalPages ? nextPage : undefined;
+    },
+    placeholderData: (previousData) => previousData,
+    initialPageParam: 1,
   });
 };

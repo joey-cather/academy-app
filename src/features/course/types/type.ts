@@ -33,5 +33,7 @@ export interface Course {
 }
 
 export interface GetCoursesParams {
+  page: number; // 현재 페이지
+  pageSize: number; // 한 페이지의 item 수
   category?: CourseCategory;
 }

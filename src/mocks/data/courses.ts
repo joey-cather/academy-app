@@ -5,7 +5,7 @@ import {
 } from '@/src/features/course/types/type';
 import { randomDate, randomPrice, randomThumbnail } from '../utils/util';
 
-export const courses: Course[] = Array.from({ length: 50 }, (_, i) => {
+export const courses: Course[] = Array.from({ length: 150 }, (_, i) => {
   const category = courseCategories[i % courseCategories.length];
   const level = courseLevels[i % courseLevels.length];
   const id = i + 1;

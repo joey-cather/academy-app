@@ -4,6 +4,7 @@ import { useCoursesQuery } from '../api/useCoursesQuery';
 import { useSearchParams } from 'next/navigation';
 import { CourseCard } from './CourseCard';
 import { isCourseCategory } from '../types/type';
+import { useEffect } from 'react';
 
 export function CourseList() {
   const searchParams = useSearchParams();
@@ -14,12 +15,41 @@ export function CourseList() {
     rawCategory && isCourseCategory(rawCategory) ? rawCategory : undefined;
 
   const {
-    data: courses,
+    data,
     isLoading,
     isError,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
   } = useCoursesQuery({
     category,
   });
+
+  const courses = data?.pages.flatMap((page) => page.items) ?? [];
+  const total = data?.pages[0]?.total ?? 0;
+
+  const loadMoreHandler = () => {
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const nearBottom =
+        window.innerHeight + document.documentElement.scrollTop >=
+        document.documentElement.offsetHeight - 50;
+      if (nearBottom) {
+        loadMoreHandler();
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   if (isLoading) return <p className="text-center mt-8">로딩 중...</p>;
   if (isError)
@@ -36,9 +66,9 @@ export function CourseList() {
 
   return (
     <div>
-      <div className="text-xs text-gray-600 dark:text-gray-300 mt-4">
-        <div className="text-sm font-medium text-gray-700 dark:text-gray-200">
-          {courses.length}개의 강좌가 검색되었습니다.
+      <div className="bg-zinc-50 dark:bg-zinc-900 p-4 rounded-lg shadow-md mb-6">
+        <div className="text-base font-semibold text-zinc-800 dark:text-zinc-200">
+          {total}개의 강좌가 검색되었습니다.
         </div>
       </div>
 
@@ -47,6 +77,8 @@ export function CourseList() {
           <CourseCard key={course.id} course={course} />
         ))}
       </div>
+
+      {isFetchingNextPage && <div>Loading more...</div>}
     </div>
   );
 }
