@@ -37,3 +37,23 @@ export interface GetCoursesParams {
   pageSize: number; // 한 페이지의 item 수
   category?: CourseCategory;
 }
+
+export interface CurriculumItem {
+  id: number;
+  title: string;
+  description: string;
+  duration: string;
+}
+
+export interface Review {
+  id: number;
+  author: string;
+  rating: number;
+  content: string;
+  createdAt: string;
+}
+
+export interface CourseDetail extends Course {
+  curriculum: CurriculumItem[];
+  reviews: Review[];
+}
