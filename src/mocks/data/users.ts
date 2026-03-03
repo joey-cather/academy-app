@@ -1,0 +1,58 @@
+import { User } from '@/src/features/auth/types/type';
+
+export const users: User[] = [
+  {
+    id: 1,
+    name: '홍길동',
+    email: 'test1@test.com',
+    password: '123123123',
+    role: 'student',
+    createdAt: '2026-02-02T10:15:30.000Z',
+    updatedAt: '2026-02-22T14:40:10.000Z',
+  },
+  {
+    id: 2,
+    name: '김철수',
+    email: 'test2@test.com',
+    password: '123123123',
+    role: 'instructor',
+    createdAt: '2026-02-11T08:25:00.000Z',
+    updatedAt: '2026-02-21T12:10:50.000Z',
+  },
+  {
+    id: 3,
+    name: '이영희',
+    email: 'test3@test.com',
+    password: '123123123',
+    role: 'admin',
+    createdAt: '2026-02-15T14:05:20.000Z',
+    updatedAt: '2026-02-23T09:55:40.000Z',
+  },
+  {
+    id: 4,
+    name: '박민수',
+    email: 'test4@test.com',
+    password: '123123123',
+    role: 'student',
+    createdAt: '2026-02-19T11:30:10.000Z',
+    updatedAt: '2026-02-24T16:20:00.000Z',
+  },
+  {
+    id: 5,
+    name: '최옥희',
+    email: 'test5@test.com',
+    password: '123123123',
+    role: 'student',
+    createdAt: '2026-02-20T11:30:10.000Z',
+    updatedAt: '2026-02-29T16:20:00.000Z',
+  },
+  {
+    id: 6,
+    name: '송수민',
+    email: 'test6@test.com',
+    password: '123123123',
+    role: 'student',
+    createdAt: '2026-02-28T11:30:10.000Z',
+    updatedAt: '2026-02-28T16:20:00.000Z',
+  },
+];

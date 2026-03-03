@@ -9,6 +9,7 @@ import {
 } from '@/src/features/auth/types/type';
 import { ApiErrorResponse, ApiResponse } from '@/src/shared/types/type';
 import { http, HttpResponse } from 'msw';
+import { users } from '../data/users';
 
 let mockRefreshToken = 'valid-refresh-token';
 
@@ -19,18 +20,22 @@ export const authHandlers = [
     async ({ request }) => {
       const { email, password } = await request.json();
 
-      if (email !== 'test1@test.com' || password !== '123123123') {
+      const user = users.find(
+        (user) => user.email === email && user.password === password
+      );
+
+      if (!user) {
         return HttpResponse.json(
           { message: '이메일과 비밀번호를 다시 확인해주세요.' },
-          { status: 401 }
+          { status: 404 }
         );
       }
 
       return HttpResponse.json(
         {
           data: {
-            accessToken: 'valid-access-token',
-            userId: 1,
+            accessToken: String(user.id),
+            userId: user.id,
           },
         },
         {
@@ -49,9 +54,9 @@ export const authHandlers = [
     LogoutRequest,
     ApiResponse<LogoutResponse> | ApiErrorResponse
   >('/api/logout', ({ request }) => {
-    const auth = request.headers.get('Authorization');
+    const token = request.headers.get('Authorization');
 
-    if (auth !== 'Bearer valid-access-token') {
+    if (!token || !token.startsWith('Bearer ')) {
       return HttpResponse.json(
         { data: { success: false }, message: 'Unauthorized' },
         { status: 401 }
@@ -77,18 +82,22 @@ export const authHandlers = [
   >('/api/register', async ({ request }) => {
     const { name, email, password } = await request.json();
 
-    // 이미 존재하는 이메일 예시
-    if (email === 'test1@test.com') {
+    const user = users.find((user) => user.email === email);
+
+    if (user) {
       return HttpResponse.json(
         { message: '이미 존재하는 이메일입니다.' },
         { status: 401 }
       );
     }
 
+    // 실제로는 저장 후 저장된 id
+    const newUserId = users.length;
+
     return HttpResponse.json(
       {
         data: {
-          userId: 1,
+          userId: newUserId,
           message: '회원가입을 축하합니다! 로그인 화면으로 이동합니다.',
         },
       },
@@ -100,22 +109,25 @@ export const authHandlers = [
   http.get<never, never, ApiResponse<User> | ApiErrorResponse>(
     '/api/me',
     ({ request }) => {
-      const auth = request.headers.get('Authorization');
+      const token = request.headers.get('Authorization');
 
-      if (auth !== 'Bearer valid-access-token') {
+      if (!token || !token.startsWith('Bearer ')) {
         return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
       }
 
+      const userId = token.split(' ')[1];
+
+      const user = users.find((user) => user.id === Number(userId));
+
+      if (!user) {
+        return HttpResponse.json(
+          { message: 'User not found' },
+          { status: 404 }
+        );
+      }
+
       return HttpResponse.json({
-        data: {
-          id: 1,
-          name: '홍길동',
-          email: 'test1@test.com',
-          password: '123123123',
-          role: 'student',
-          createdAt: '2026-02-20T10:15:30.000Z',
-          updatedAt: '2026-02-22T14:40:10.000Z',
-        },
+        data: user,
       });
     }
   ),

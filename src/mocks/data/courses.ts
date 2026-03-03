@@ -7,24 +7,100 @@ import {
 } from '@/src/features/course/types/type';
 import { randomDate, randomPrice, randomThumbnail } from '../utils/util';
 
-export const courses: Course[] = Array.from({ length: 150 }, (_, i) => {
-  const category = courseCategories[i % courseCategories.length];
-  const level = courseLevels[i % courseLevels.length];
-  const id = i + 1;
+// /courses 화면에서 무한 스크롤 테스트용!
+// export const courses: Course[] = Array.from({ length: 150 }, (_, i) => {
+//   const category = courseCategories[i % courseCategories.length];
+//   const level = courseLevels[i % courseLevels.length];
+//   const id = i + 1;
 
-  return {
-    id,
-    title: `${category.toUpperCase()} ${level} Course #${id}`,
-    description: `This is a sample description for ${category} ${level} course #${id}.`,
-    category,
-    level,
-    price: randomPrice(),
-    thumbnail: randomThumbnail(id),
-    instructorId: Math.floor(Math.random() * 10) + 1, // 강사 ID 1~10
-    createdAt: randomDate(),
-    updatedAt: randomDate(),
-  };
-});
+//   return {
+//     id,
+//     title: `${category.toUpperCase()} ${level} Course #${id}`,
+//     description: `This is a sample description for ${category} ${level} course #${id}.`,
+//     category,
+//     level,
+//     price: randomPrice(),
+//     thumbnail: randomThumbnail(id),
+//     instructorId: Math.floor(Math.random() * 10) + 1, // 강사 ID 1~10
+//     createdAt: randomDate(),
+//     updatedAt: randomDate(),
+//   };
+// });
+
+export const courses: Course[] = [
+  {
+    id: 1,
+    title: 'JavaScript 기초',
+    description: 'JS 기본 문법과 활용',
+    category: 'coding',
+    level: 'beginner',
+    price: 200000,
+    thumbnail: randomThumbnail(1),
+    instructorId: 1,
+    createdAt: '2026-01-01T14:05:20.000Z',
+    updatedAt: '2026-01-01T14:05:20.000Z',
+  },
+  {
+    id: 2,
+    title: 'React 심화',
+    description: 'React 프로젝트 개발',
+    category: 'coding',
+    level: 'intermediate',
+    price: 300000,
+    thumbnail: randomThumbnail(2),
+    instructorId: 5,
+    createdAt: '2026-01-02T14:05:20.000Z',
+    updatedAt: '2026-01-02T14:05:20.000Z',
+  },
+  {
+    id: 3,
+    title: 'Python 데이터 분석',
+    description: 'Python과 pandas 활용',
+    category: 'english',
+    level: 'beginner',
+    price: 250000,
+    thumbnail: randomThumbnail(3),
+    instructorId: 3,
+    createdAt: '2026-01-03T14:05:20.000Z',
+    updatedAt: '2026-01-03T14:05:20.000Z',
+  },
+  {
+    id: 4,
+    title: 'UI/UX 디자인',
+    description: '디자인 기초부터 실무까지',
+    category: 'math',
+    level: 'beginner',
+    price: 180000,
+    thumbnail: randomThumbnail(4),
+    instructorId: 2,
+    createdAt: '2026-01-04T14:05:20.000Z',
+    updatedAt: '2026-01-04T14:05:20.000Z',
+  },
+  {
+    id: 5,
+    title: '머신러닝 입문',
+    description: '기초 ML 알고리즘 학습',
+    category: 'science',
+    level: 'beginner',
+    price: 350000,
+    thumbnail: randomThumbnail(5),
+    instructorId: 4,
+    createdAt: '2026-01-05T14:05:20.000Z',
+    updatedAt: '2026-01-05T14:05:20.000Z',
+  },
+  {
+    id: 6,
+    title: 'Node.js 백엔드 개발',
+    description: 'Express로 서버 구축',
+    category: 'coding',
+    level: 'intermediate',
+    price: 280000,
+    thumbnail: randomThumbnail(6),
+    instructorId: 5,
+    createdAt: '2026-01-06T14:05:20.000Z',
+    updatedAt: '2026-01-06T14:05:20.000Z',
+  },
+];
 
 export const curriculum: CurriculumItem[] = [
   {
