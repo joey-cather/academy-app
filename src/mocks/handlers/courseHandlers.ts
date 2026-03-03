@@ -4,11 +4,12 @@ import {
   PaginatedResponse,
 } from '@/src/shared/types/type';
 import { http, HttpResponse } from 'msw';
-import { courses } from '../data/courses';
+import { courses, curriculum, reviews } from '../data/courses';
 import {
   Course,
-  CourseDetail,
+  CurriculumItem,
   isCourseCategory,
+  Review,
 } from '@/src/features/course/types/type';
 
 export const courseHandlers = [
@@ -52,9 +53,9 @@ export const courseHandlers = [
     );
   }),
 
-  // 강좌 상세 조회
-  http.get<never, never, ApiResponse<CourseDetail> | ApiErrorResponse>(
-    '/api/courses/:courseId/detail',
+  // 강좌 조회
+  http.get<never, never, ApiResponse<Course> | ApiErrorResponse>(
+    '/api/courses/:courseId',
     ({ params }) => {
       const { courseId } = params;
 
@@ -67,43 +68,46 @@ export const courseHandlers = [
         );
       }
 
-      const courseDetail: CourseDetail = {
-        ...course,
-        curriculum: [
-          {
-            id: 1,
-            title: 'Introduction to React',
-            description: 'Learn about React basics.',
-            duration: '1h',
-          },
-          {
-            id: 2,
-            title: 'React State Management',
-            description: 'Learn how to manage state in React.',
-            duration: '1h 30m',
-          },
-        ],
-        reviews: [
-          {
-            id: 1,
-            author: 'John Doe',
-            rating: 5,
-            content: 'Great course!',
-            createdAt: '2023-01-10T00:00:00Z',
-          },
-          {
-            id: 2,
-            author: 'Jane Smith',
-            rating: 4,
-            content: 'Good course, but could use more examples.',
-            createdAt: '2023-02-01T00:00:00Z',
-          },
-        ],
-      };
+      return HttpResponse.json(
+        {
+          data: course,
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  // 커리큘럼 조회
+  http.get<never, never, ApiResponse<CurriculumItem[]> | ApiErrorResponse>(
+    '/api/courses/:courseId/curriculum',
+    ({ params }) => {
+      const { courseId } = params;
+
+      const filtered = curriculum.filter(
+        (curriculumItem) => curriculumItem.courseId === Number(courseId)
+      );
 
       return HttpResponse.json(
         {
-          data: courseDetail,
+          data: filtered,
+        },
+        { status: 200 }
+      );
+    }
+  ),
+
+  // 수강 후기 조회
+  http.get<never, never, ApiResponse<Review[]> | ApiErrorResponse>(
+    '/api/courses/:courseId/reviews',
+    ({ params }) => {
+      const { courseId } = params;
+
+      const filtered = reviews.filter(
+        (review) => review.courseId === Number(courseId)
+      );
+      return HttpResponse.json(
+        {
+          data: filtered,
         },
         { status: 200 }
       );

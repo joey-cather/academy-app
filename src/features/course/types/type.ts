@@ -40,6 +40,7 @@ export interface GetCoursesParams {
 
 export interface CurriculumItem {
   id: number;
+  courseId: number;
   title: string;
   description: string;
   duration: string;
@@ -47,13 +48,9 @@ export interface CurriculumItem {
 
 export interface Review {
   id: number;
+  courseId: number;
   author: string;
   rating: number;
   content: string;
   createdAt: string;
-}
-
-export interface CourseDetail extends Course {
-  curriculum: CurriculumItem[];
-  reviews: Review[];
 }
