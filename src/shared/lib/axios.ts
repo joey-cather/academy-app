@@ -2,7 +2,7 @@ import axios from 'axios';
 import { useAuthStore } from '../hooks/useAuthStore';
 
 export const axiosInstance = axios.create({
-  baseURL: '/api',
+  baseURL: process.env.NEXT_PUBLIC_API_URL + '/api',
   headers: {
     'Content-Type': 'application/json',
   },
