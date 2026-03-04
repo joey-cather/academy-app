@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useInstructorsQuery } from '../api/useInstructorsQuery';
 
 export default function InstructorsPage() {
@@ -26,7 +27,7 @@ export default function InstructorsPage() {
             className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-900 dark:ring-zinc-800 hover:shadow-md transition"
           >
             {instructor.profileImage && (
-              <img
+              <Image
                 src={instructor.profileImage}
                 alt={instructor.name}
                 className="w-full h-40 object-cover rounded-lg mb-4"
