@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { Course } from '../types/type';
-import Image from 'next/image';
 
 interface Props {
   course: Course;
@@ -13,7 +12,7 @@ export function CourseCard({ course }: Props) {
     <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-900 dark:ring-zinc-800 hover:shadow-md transition">
       <Link href={`/courses/${course.id}`}>
         {course.thumbnail && (
-          <Image
+          <img
             src={course.thumbnail}
             alt={course.title}
             className="w-full h-40 object-cover rounded-lg mb-4"
