@@ -1,4 +1,4 @@
-import { Enrollment } from '@/src/features/enrollment/types/type';
+import { Enrollment } from '@/src/features/dashboard/types/type';
 
 export const enrollments: Enrollment[] = [
   {
@@ -77,7 +77,7 @@ export const enrollments: Enrollment[] = [
   },
   {
     id: 10,
-    userId: 6,
+    userId: 5,
     courseId: 5,
     progress: 40,
     status: 'active',

@@ -1,10 +1,14 @@
 'use client';
 
 import Link from 'next/link';
+import { ProgressSummary } from './ProgressSummary';
+import { ActiveCourses } from './ActiveCourses';
+import { RecentActivity } from './RecentActivity';
 
 const DashboardPage = () => {
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-6 py-10">
+      {/* 네비게이션 링크 */}
       <div className="mb-6 flex space-x-4">
         <Link
           href="/dashboard/courses"
@@ -18,6 +22,17 @@ const DashboardPage = () => {
         >
           👤 프로필 수정
         </Link>
+      </div>
+
+      {/* 환영 메시지 및 진도 요약 */}
+      <ProgressSummary />
+
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
+        {/* 수강 중인 강좌 */}
+        <ActiveCourses />
+
+        {/* 최근 활동 */}
+        <RecentActivity />
       </div>
     </div>
   );

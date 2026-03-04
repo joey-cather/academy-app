@@ -1,3 +1,5 @@
+import { Course } from '../../course/types/type';
+
 export interface Enrollment {
   id: number;
   userId: number;
@@ -6,4 +8,8 @@ export interface Enrollment {
   status: 'active' | 'completed' | 'cancelled';
   enrolledAt: string;
   completedAt?: string;
+}
+
+export interface DashboardEnrollment extends Enrollment {
+  course: Course;
 }
