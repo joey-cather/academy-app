@@ -13,7 +13,7 @@ import {
 } from '@/src/features/course/types/type';
 
 export const courseHandlers = [
-  // 강좌 조회
+  // 강좌 목록 조회
   http.get<
     never,
     never,

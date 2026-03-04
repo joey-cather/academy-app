@@ -13,14 +13,14 @@ export function ContactPage() {
     formState: { errors, isSubmitting },
   } = useContactForm();
 
-  const { data: user, isLoading, isError, error } = useMeQuery();
+  const { data: me, isLoading, isError, error } = useMeQuery();
 
   useEffect(() => {
-    if (user) {
-      setValue('name', user.name);
-      setValue('email', user.email);
+    if (me) {
+      setValue('name', me.name);
+      setValue('email', me.email);
     }
-  }, [user, setValue]);
+  }, [me, setValue]);
 
   if (isLoading) return <p className="text-center mt-8">로딩 중...</p>;
   if (isError)
@@ -44,7 +44,7 @@ export function ContactPage() {
           <input
             type="text"
             {...register('name')}
-            readOnly={!!user}
+            readOnly={!!me}
             className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:focus:border-zinc-100 dark:focus:ring-zinc-100"
           />
           {errors.name && (
@@ -59,7 +59,7 @@ export function ContactPage() {
           <input
             type="email"
             {...register('email')}
-            readOnly={!!user}
+            readOnly={!!me}
             className="w-full rounded-md border border-zinc-300 bg-white px-3 py-2 text-sm text-zinc-900 outline-none focus:border-zinc-900 focus:ring-1 focus:ring-zinc-900 dark:border-zinc-700 dark:bg-zinc-900 dark:text-zinc-50 dark:focus:border-zinc-100 dark:focus:ring-zinc-100"
           />
           {errors.email && (

@@ -10,6 +10,7 @@ import {
 import { ApiErrorResponse, ApiResponse } from '@/src/shared/types/type';
 import { http, HttpResponse } from 'msw';
 import { users } from '../data/users';
+import { decodeToken } from '../utils/util';
 
 let mockRefreshToken = 'valid-refresh-token';
 
@@ -34,7 +35,7 @@ export const authHandlers = [
       return HttpResponse.json(
         {
           data: {
-            accessToken: String(user.id),
+            accessToken: 'valid-access-token-' + user.id,
             userId: user.id,
           },
         },
@@ -54,9 +55,11 @@ export const authHandlers = [
     LogoutRequest,
     ApiResponse<LogoutResponse> | ApiErrorResponse
   >('/api/logout', ({ request }) => {
-    const token = request.headers.get('Authorization');
+    const authHeader = request.headers.get('Authorization');
 
-    if (!token || !token.startsWith('Bearer ')) {
+    const token = decodeToken(authHeader);
+
+    if (!token) {
       return HttpResponse.json(
         { data: { success: false }, message: 'Unauthorized' },
         { status: 401 }
@@ -92,7 +95,7 @@ export const authHandlers = [
     }
 
     // 실제로는 저장 후 저장된 id
-    const newUserId = users.length;
+    const newUserId = users.length + 1;
 
     return HttpResponse.json(
       {
@@ -109,15 +112,15 @@ export const authHandlers = [
   http.get<never, never, ApiResponse<User> | ApiErrorResponse>(
     '/api/me',
     ({ request }) => {
-      const token = request.headers.get('Authorization');
+      const authHeader = request.headers.get('Authorization');
 
-      if (!token || !token.startsWith('Bearer ')) {
+      const token = decodeToken(authHeader);
+
+      if (!token) {
         return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
       }
 
-      const userId = token.split(' ')[1];
-
-      const user = users.find((user) => user.id === Number(userId));
+      const user = users.find((user) => user.id === token.userId);
 
       if (!user) {
         return HttpResponse.json(
