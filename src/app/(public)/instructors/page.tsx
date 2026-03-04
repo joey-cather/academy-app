@@ -2,7 +2,7 @@ import InstructorsPage from '@/src/features/instructor/components/InstructorsPag
 
 export default function Instructors() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
+    <div className="flex min-h-screen justify-center bg-zinc-50 font-sans dark:bg-black">
       <InstructorsPage />
     </div>
   );
