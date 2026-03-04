@@ -7,7 +7,7 @@ export const MSWProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     if (
       typeof window !== 'undefined' &&
-      process.env.NODE_ENV === 'development'
+      process.env.NEXT_PUBLIC_ENABLE_MSW === 'true'
     ) {
       import('../../mocks/browser')
         .then(({ worker }) => worker.start())
