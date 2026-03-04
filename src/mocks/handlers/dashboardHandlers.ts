@@ -1,4 +1,8 @@
-import { DashboardEnrollment } from '@/src/features/dashboard/types/type';
+import {
+  DashboardEnrollment,
+  DashboardUpdateUserRequest,
+  DashboardUpdateUserResponse,
+} from '@/src/features/dashboard/types/type';
 import { ApiErrorResponse, ApiResponse } from '@/src/shared/types/type';
 import { http, HttpResponse } from 'msw';
 import { enrollments } from '../data/enrollments';
@@ -42,4 +46,31 @@ export const dashboardHandlers = [
       );
     }
   ),
+
+  http.post<
+    never,
+    DashboardUpdateUserRequest,
+    ApiResponse<DashboardUpdateUserResponse> | ApiErrorResponse
+  >('/api/dashboard/update/user', async ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+
+    const token = decodeToken(authHeader);
+
+    if (!token) {
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { id: userId, name, email, password } = await request.json();
+    // 수정하는 로직
+
+    return HttpResponse.json(
+      {
+        data: {
+          userId: userId,
+          message: '회원 정보가 수정되었습니다.',
+        },
+      },
+      { status: 200 }
+    );
+  }),
 ];

@@ -13,3 +13,15 @@ export interface Enrollment {
 export interface DashboardEnrollment extends Enrollment {
   course: Course;
 }
+
+export interface DashboardUpdateUserRequest {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+}
+
+export interface DashboardUpdateUserResponse {
+  userId: number;
+  message?: string;
+}

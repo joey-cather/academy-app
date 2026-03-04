@@ -5,12 +5,8 @@ import { useDashboardQuery } from '../api/useDashboardQuery';
 import CircularProgressBar from './CircularProgressBar';
 
 export const ActiveCourses = () => {
-  const { data: me, isLoading: meLoading } = useMeQuery();
+  const { data: me } = useMeQuery();
   const { data, isLoading } = useDashboardQuery(me?.id);
-
-  if (meLoading) return <div>로딩...</div>;
-
-  if (!me) return <div>로그인이 필요합니다.</div>;
 
   if (isLoading) return <div>대시보드 로딩중...</div>;
 

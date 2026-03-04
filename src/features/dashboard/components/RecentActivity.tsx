@@ -4,12 +4,8 @@ import { useMeQuery } from '../../auth/api/useMeQuery';
 import { useDashboardQuery } from '../api/useDashboardQuery';
 
 export const RecentActivity = () => {
-  const { data: me, isLoading: meLoading } = useMeQuery();
+  const { data: me } = useMeQuery();
   const { data, isLoading } = useDashboardQuery(me?.id);
-
-  if (meLoading) return <div>로딩...</div>;
-
-  if (!me) return <div>로그인이 필요합니다.</div>;
 
   if (isLoading) return <div>대시보드 로딩중...</div>;
 
@@ -36,8 +32,8 @@ export const RecentActivity = () => {
               >
                 <div className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                   {e.status === 'completed'
-                    ? `✅ ${e.course.title} 완료`
-                    : `📘 ${e.course.title} 수강 시작`}
+                    ? `✅수강 완료 - ${e.course.title}`
+                    : `📘수강 시작 - ${e.course.title}`}
                 </div>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   {e.enrolledAt}
