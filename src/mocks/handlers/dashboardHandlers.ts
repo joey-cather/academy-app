@@ -8,6 +8,7 @@ import { http, HttpResponse } from 'msw';
 import { enrollments } from '../data/enrollments';
 import { courses } from '../data/courses';
 import { decodeToken } from '../utils/util';
+import { instructors } from '../data/instructors';
 
 export const dashboardHandlers = [
   http.get<never, never, ApiResponse<DashboardEnrollment[]> | ApiErrorResponse>(
@@ -21,26 +22,30 @@ export const dashboardHandlers = [
         return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
       }
 
-      const userEnrollments = enrollments.filter(
-        (e) => e.userId === token.userId
-      );
-
-      const enriched = userEnrollments.reduce<DashboardEnrollment[]>(
-        (acc, e) => {
+      const dashboardData = enrollments
+        .filter((e) => e.userId === token.userId)
+        .map((e) => {
           const course = courses.find((c) => c.id === e.courseId);
+          if (!course) return null;
 
-          if (course) {
-            acc.push({ ...e, course });
-          }
+          const instructor = instructors.find(
+            (i) => i.id === course.instructorId
+          );
+          if (!instructor) return null;
 
-          return acc;
-        },
-        []
-      );
+          return {
+            ...e,
+            course: {
+              ...course,
+              instructor,
+            },
+          };
+        })
+        .filter((item): item is DashboardEnrollment => item !== null);
 
       return HttpResponse.json(
         {
-          data: enriched,
+          data: dashboardData,
         },
         { status: 200 }
       );

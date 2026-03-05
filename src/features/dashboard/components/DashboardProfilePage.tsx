@@ -144,18 +144,18 @@ const DashboardProfilePage = () => {
           </section>
 
           <section className="courses-section flex-[3] bg-zinc-50 dark:bg-zinc-800 p-6 rounded-xl shadow">
-            <h2 className="text-xl font-semibold mb-4">수강 이력 관리</h2>
+            <h2 className="text-xl font-semibold mb-4">수강 이력</h2>
             <ul className="space-y-5">
               {data.length > 0 ? (
                 data.map((e) => (
                   <li
                     key={e.id}
-                    className="bg-zinc-100 dark:bg-zinc-700 p-5 rounded-2xl shadow-md hover:shadow-xl hover:scale-[1.02] transition-transform duration-200"
+                    className="bg-zinc-100 dark:bg-zinc-700 p-5 rounded-2xl shadow-md"
                   >
                     <div className="text-xl font-bold text-gray-900 dark:text-gray-100">
                       {e.status === 'completed'
-                        ? `✅수강 완료 - ${e.course.title}`
-                        : `📘수강 시작 - ${e.course.title}`}
+                        ? `✅ 수강 완료 - ${e.course.title}`
+                        : `📘 수강 시작 - ${e.course.title}`}
                     </div>
                     <span className="text-sm text-gray-500 dark:text-gray-400 mt-1 block">
                       {e.enrolledAt}

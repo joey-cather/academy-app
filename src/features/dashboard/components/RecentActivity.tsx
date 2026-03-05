@@ -32,8 +32,8 @@ export const RecentActivity = () => {
               >
                 <div className="text-xl font-semibold text-gray-800 dark:text-gray-200">
                   {e.status === 'completed'
-                    ? `✅수강 완료 - ${e.course.title}`
-                    : `📘수강 시작 - ${e.course.title}`}
+                    ? `✅ 수강 완료 - ${e.course.title}`
+                    : `📘 수강 시작 - ${e.course.title}`}
                 </div>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
                   {e.enrolledAt}

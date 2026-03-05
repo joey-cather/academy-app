@@ -1,4 +1,4 @@
-import { Course } from '../../course/types/type';
+import { CourseWithInstructor } from '../../course/types/type';
 
 export interface Enrollment {
   id: number;
@@ -11,7 +11,7 @@ export interface Enrollment {
 }
 
 export interface DashboardEnrollment extends Enrollment {
-  course: Course;
+  course: CourseWithInstructor;
 }
 
 export interface DashboardUpdateUserRequest {

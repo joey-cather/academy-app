@@ -1,7 +1,6 @@
 import { ReactNode, useState } from 'react';
 import { useMeQuery } from '../../auth/api/useMeQuery';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
 
 interface DashboardLayoutProps {
   children: ReactNode;

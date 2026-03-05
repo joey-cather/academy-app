@@ -23,13 +23,40 @@ export const ActiveCourses = () => {
             activeEnrollments.map((e) => (
               <div
                 key={e.id}
-                className="bg-zinc-100 dark:bg-zinc-700 p-4 rounded-lg shadow-sm hover:shadow-lg transition"
+                className="bg-zinc-100 dark:bg-zinc-700 p-4 rounded-lg shadow-sm flex"
               >
-                <div className="text-xl font-semibold text-gray-800 dark:text-gray-200">
-                  {e.course.title}
+                <div className="w-1/2 pl-4 flex flex-col justify-center">
+                  <div className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                    {e.course.title}
+                  </div>
+
+                  <div className="flex items-center mt-2">
+                    <img
+                      src={e.course.instructor.profileImage}
+                      alt={e.course.instructor.name}
+                      className="w-6 h-6 rounded-full mr-2"
+                    />
+                    <span className="text-sm text-gray-600 dark:text-gray-300">
+                      {e.course.instructor.name}
+                    </span>
+                  </div>
+
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                    {e.course.category} • {e.course.level} • {e.course.price}원
+                  </div>
                 </div>
-                <div className="w-full h-32 object-cover rounded-xl mb-4">
-                  <CircularProgressBar progress={e.progress} />
+
+                <div className="w-1/2 flex items-center justify-center">
+                  <CircularProgressBar
+                    progress={e.progress}
+                    strokeColor={
+                      e.status === 'completed'
+                        ? 'green'
+                        : e.status === 'active'
+                          ? 'blue'
+                          : 'gray'
+                    }
+                  />
                 </div>
               </div>
             ))

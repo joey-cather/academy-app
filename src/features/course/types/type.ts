@@ -1,3 +1,5 @@
+import { Instructor } from '../../instructor/types/type';
+
 export const courseCategories = [
   'english',
   'math',
@@ -30,6 +32,10 @@ export interface Course {
   instructorId: number;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface CourseWithInstructor extends Course {
+  instructor: Instructor;
 }
 
 export interface GetCoursesParams {

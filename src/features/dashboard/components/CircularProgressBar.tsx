@@ -1,4 +1,10 @@
-const CircularProgressBar = ({ progress }: { progress: number }) => {
+const CircularProgressBar = ({
+  progress,
+  strokeColor,
+}: {
+  progress: number;
+  strokeColor: 'green' | 'blue' | 'gray';
+}) => {
   const radius = 50; // 원의 반지름
   const circumference = 2 * Math.PI * radius; // 원의 둘레
 
@@ -27,7 +33,7 @@ const CircularProgressBar = ({ progress }: { progress: number }) => {
           cx="60"
           cy="60"
           r={radius}
-          stroke="#3b82f6" // 진행률 색 (파란색)
+          stroke={strokeColor} // 진행률 색
           strokeWidth="10"
           fill="transparent"
           strokeDasharray={circumference} // 원의 둘레
