@@ -6,13 +6,11 @@ import { useDashboardQuery } from '../api/useDashboardQuery';
 const EnrollmentHistory = () => {
   const { data: me } = useMeQuery();
 
-  if (!me) return <div>로그인이 필요합니다.</div>;
-
-  const { data, isLoading } = useDashboardQuery(me.id);
+  const { data, isLoading, isError } = useDashboardQuery(me?.id);
 
   if (isLoading) return <div>대시보드 로딩중...</div>;
-
-  if (!data) return null;
+  if (isError)
+    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
 
   const sortedEnrollments =
     data?.sort(

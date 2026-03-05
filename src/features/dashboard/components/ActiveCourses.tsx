@@ -6,9 +6,11 @@ import CircularProgressBar from './CircularProgressBar';
 
 export const ActiveCourses = () => {
   const { data: me } = useMeQuery();
-  const { data, isLoading } = useDashboardQuery(me?.id);
+  const { data, isLoading, isError } = useDashboardQuery(me?.id);
 
   if (isLoading) return <div>대시보드 로딩중...</div>;
+  if (isError)
+    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
 
   const activeEnrollments = data?.filter((e) => e.status === 'active') ?? [];
 

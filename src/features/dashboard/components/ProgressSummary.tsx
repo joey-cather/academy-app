@@ -5,16 +5,16 @@ import { useDashboardQuery } from '../api/useDashboardQuery';
 
 export const ProgressSummary = () => {
   const { data: me } = useMeQuery();
-  const { data, isLoading } = useDashboardQuery(me?.id);
+  const { data, isLoading, isError } = useDashboardQuery(me?.id);
 
   if (isLoading) return <div>대시보드 로딩중...</div>;
+  if (isError)
+    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
 
-  if (!data) return null;
-
-  const total = data.length;
-  const completed = data.filter((e) => e.status === 'completed').length;
-  const active = data.filter((e) => e.status === 'active').length;
-  const avg = data.reduce((a, c) => a + c.progress, 0) / total;
+  const total = data?.length ?? 0;
+  const completed = data?.filter((e) => e.status === 'completed').length ?? 0;
+  const active = data?.filter((e) => e.status === 'active').length ?? 0;
+  const avg = data?.reduce((a, c) => a + c.progress, 0) ?? 0 / total;
 
   return (
     <section className="bg-zinc-50 dark:bg-zinc-800 p-6 shadow-xl rounded-2xl mb-8">

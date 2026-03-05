@@ -5,10 +5,10 @@ import {
   type ProfileFormValues,
 } from '../schemas/profile.schema';
 import { useProfileMutation } from '../api/useProfileMutation';
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
-const useProfileForm = (userId: number) => {
+const useProfileForm = (userId?: number) => {
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(ProfileSchema),
     defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
@@ -21,6 +21,14 @@ const useProfileForm = (userId: number) => {
 
   const onSubmit = useCallback(
     async (values: ProfileFormValues) => {
+      if (!userId) {
+        notify({
+          type: 'alert',
+          message: '사용자 정보가 아직 준비되지 않았습니다.',
+        });
+        return;
+      }
+
       try {
         const response = await mutateAsync({ ...values, id: userId });
 

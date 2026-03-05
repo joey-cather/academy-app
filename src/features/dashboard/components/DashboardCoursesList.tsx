@@ -9,15 +9,13 @@ import CircularProgressBar from './CircularProgressBar';
 const DashboardCoursesList = () => {
   const { data: me } = useMeQuery();
 
-  if (!me) return <div>로그인이 필요합니다.</div>;
-
-  const { data, isLoading } = useDashboardQuery(me.id);
-
-  if (isLoading) return <div>대시보드 로딩중...</div>;
-
-  if (!data) return null;
+  const { data, isLoading, isError } = useDashboardQuery(me?.id);
 
   const { statusFilter, categoryFilter, searchKeyword } = useSearchStore();
+
+  if (isLoading) return <div>대시보드 로딩중...</div>;
+  if (isError)
+    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
 
   const sortedEnrollments =
     data?.sort(

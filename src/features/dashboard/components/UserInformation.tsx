@@ -7,14 +7,12 @@ import { useMeQuery } from '../../auth/api/useMeQuery';
 const UserInformation = () => {
   const { data: me } = useMeQuery();
 
-  if (!me) return <div>로그인이 필요합니다.</div>;
-
   const {
     register,
     handleSubmit,
     setValue,
     formState: { errors, isSubmitting },
-  } = useProfileForm(me.id);
+  } = useProfileForm(me?.id);
 
   useEffect(() => {
     if (me) {
