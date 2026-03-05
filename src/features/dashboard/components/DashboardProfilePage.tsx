@@ -29,7 +29,7 @@ const DashboardProfilePage = () => {
 
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto px-4 py-6">
+      <div className="w-5xl mx-auto px-4 py-6">
         <div className="dashboard-content flex flex-col lg:flex-row gap-8">
           {/* 개인정보 변경 */}
           <UserInformation />

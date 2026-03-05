@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useMeQuery } from '../../auth/api/useMeQuery';
 import { useDashboardQuery } from '../api/useDashboardQuery';
 import CircularProgressBar from './CircularProgressBar';
@@ -33,11 +34,15 @@ export const ActiveCourses = () => {
                   </div>
 
                   <div className="flex items-center mt-2">
-                    <img
-                      src={e.course.instructor.profileImage}
-                      alt={e.course.instructor.name}
-                      className="w-6 h-6 rounded-full mr-2"
-                    />
+                    <div className="relative w-6 h-6 rounded-full mr-2 overflow-hidden">
+                      <Image
+                        src={e.course.instructor.profileImage}
+                        alt={e.course.instructor.name}
+                        fill
+                        className="object-cover"
+                        unoptimized={true} // SVG 안전하게 렌더링
+                      />
+                    </div>
                     <span className="text-sm text-gray-600 dark:text-gray-300">
                       {e.course.instructor.name}
                     </span>

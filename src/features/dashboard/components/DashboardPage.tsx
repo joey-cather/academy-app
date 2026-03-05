@@ -30,7 +30,7 @@ const DashboardPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto px-4 py-6">
+      <div className="w-5xl mx-auto px-4 py-6">
         {/* 환영 메시지 및 진도 요약 */}
         <ProgressSummary />
 

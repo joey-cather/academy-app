@@ -2,6 +2,7 @@
 
 import { useParams } from 'next/navigation';
 import { useCourseQuery } from '../api/useCourseDetailquery';
+import Image from 'next/image';
 
 const CourseInformation = () => {
   const params = useParams();
@@ -25,11 +26,12 @@ const CourseInformation = () => {
     <div className="lg:col-span-3">
       {/* 강좌 썸네일 */}
       {courseDetail.thumbnail && (
-        <div className="text-center mb-8">
-          <img
+        <div className="relative h-60 rounded-xl mb-8 overflow-hidden">
+          <Image
             src={courseDetail.thumbnail}
             alt={courseDetail.title}
-            className="w-full h-60 object-cover rounded-xl mb-4"
+            fill
+            className="object-cover"
           />
         </div>
       )}

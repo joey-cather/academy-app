@@ -5,6 +5,7 @@ import { useMeQuery } from '../../auth/api/useMeQuery';
 import { useDashboardQuery } from '../api/useDashboardQuery';
 import { useSearchStore } from '../hooks/useSearchStore';
 import CircularProgressBar from './CircularProgressBar';
+import Image from 'next/image';
 
 const DashboardCoursesList = () => {
   const { data: me } = useMeQuery();
@@ -43,11 +44,14 @@ const DashboardCoursesList = () => {
           <Link key={e.id} href={`/courses/${e.course.id}`}>
             <div className=" bg-zinc-50 dark:bg-zinc-800 p-5 rounded-2xl shadow-md flex flex-col lg:flex-row items-center gap-4 cursor-pointer transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-lg hover:bg-zinc-100 dark:hover:bg-zinc-700">
               <div className="w-full lg:w-[30%] flex justify-center lg:justify-start mb-2 lg:mb-0">
-                <img
-                  src={e.course.thumbnail ?? '/placeholder.png'}
-                  alt={e.course.title}
-                  className="w-40 h-32 sm:w-44 sm:h-36 lg:w-48 lg:h-36 rounded-lg object-cover"
-                />
+                <div className="relative w-40 h-32 sm:w-44 sm:h-36 lg:w-48 lg:h-36 rounded-lg overflow-hidden">
+                  <Image
+                    src={e.course.thumbnail ?? '/placeholder.png'}
+                    alt={e.course.title}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
               </div>
 
               <div className="w-full lg:w-[35%] flex flex-col justify-center gap-2 text-center sm:text-left lg:text-left mb-2 sm:mb-0">
@@ -58,11 +62,15 @@ const DashboardCoursesList = () => {
                   {e.course.category} • {e.course.level} • {e.course.price}원
                 </div>
                 <div className="flex items-center justify-center sm:justify-start gap-2 mt-1">
-                  <img
-                    src={e.course.instructor.profileImage}
-                    alt={e.course.instructor.name}
-                    className="w-6 h-6 rounded-full"
-                  />
+                  <div className="relative w-6 h-6 rounded-full overflow-hidden">
+                    <Image
+                      src={e.course.instructor.profileImage}
+                      alt={e.course.instructor.name}
+                      fill
+                      className="object-cover"
+                      unoptimized={true} // SVG 안전하게 렌더링
+                    />
+                  </div>
                   <span className="text-sm text-gray-600 dark:text-gray-300">
                     {e.course.instructor.name}
                   </span>

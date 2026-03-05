@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useInstructorsQuery } from '../api/useInstructorsQuery';
 
 export default function InstructorsPage() {
@@ -14,7 +15,7 @@ export default function InstructorsPage() {
     );
 
   return (
-    <div className="max-w-5xl mx-auto px-4 py-8">
+    <div className="w-5xl mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold text-zinc-900 dark:text-zinc-50 mb-6">
         강사 목록
       </h1>
@@ -26,11 +27,15 @@ export default function InstructorsPage() {
             className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-900 dark:ring-zinc-800 hover:shadow-md transition"
           >
             {instructor.profileImage && (
-              <img
-                src={instructor.profileImage}
-                alt={instructor.name}
-                className="w-full h-40 object-cover rounded-lg mb-4"
-              />
+              <div className="relative h-40 rounded-lg mb-4 overflow-hidden">
+                <Image
+                  src={instructor.profileImage}
+                  alt={instructor.name}
+                  fill
+                  className="object-cover"
+                  unoptimized={true} // SVG 안전하게 렌더링
+                />
+              </div>
             )}
             <h2 className="text-lg font-semibold text-zinc-900 dark:text-zinc-50 mb-2">
               {instructor.name}
