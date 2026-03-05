@@ -6,7 +6,6 @@ import {
 } from '../schemas/profile.schema';
 import { useProfileMutation } from '../api/useProfileMutation';
 import { useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 
 const useProfileForm = (userId: number) => {
@@ -18,8 +17,6 @@ const useProfileForm = (userId: number) => {
 
   const { mutateAsync } = useProfileMutation();
 
-  const router = useRouter();
-
   const { notify } = useNotification();
 
   const onSubmit = useCallback(
@@ -30,6 +27,10 @@ const useProfileForm = (userId: number) => {
         notify({
           type: 'alert',
           message: response.message || '',
+          onConfirm: () => {
+            form.setValue('password', '');
+            form.setValue('confirmPassword', '');
+          },
         });
       } catch (error) {
         if (error instanceof Error) {

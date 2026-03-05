@@ -1,6 +1,7 @@
 'use client';
 
 import { useSearchStore } from '../hooks/useSearchStore';
+import SelectBox from './SelectBox';
 
 const SearchBar = () => {
   const {
@@ -12,32 +13,38 @@ const SearchBar = () => {
     setSearchKeyword,
   } = useSearchStore();
 
+  const statusOptions = [
+    { label: '상태 전체', value: '' },
+    { label: '수강 중', value: 'active' },
+    { label: '완료', value: 'completed' },
+    { label: '취소', value: 'cancelled' },
+  ];
+
+  const categoryOptions = [
+    { label: '카테고리 전체', value: '' },
+    { label: '영어', value: 'english' },
+    { label: '수학', value: 'math' },
+    { label: '과학', value: 'science' },
+    { label: '코딩', value: 'coding' },
+  ];
+
   return (
     <div className="flex flex-col sm:flex-row gap-3 bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl shadow-md items-center mb-8">
       {/* 상태 필터 */}
-      <select
+      <SelectBox
         value={statusFilter}
-        onChange={(e) => setStatusFilter(e.target.value)}
-        className="w-full sm:w-auto border border-zinc-300 dark:border-zinc-600 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500 dark:bg-zinc-900 dark:text-gray-100"
-      >
-        <option value="">상태 전체</option>
-        <option value="active">수강 중</option>
-        <option value="completed">완료</option>
-        <option value="cancelled">취소</option>
-      </select>
+        setValue={setStatusFilter}
+        options={statusOptions}
+        width="w-25"
+      />
 
       {/* 카테고리 필터 */}
-      <select
+      <SelectBox
         value={categoryFilter}
-        onChange={(e) => setCategoryFilter(e.target.value)}
-        className="w-full sm:w-auto border border-zinc-300 dark:border-zinc-600 rounded-lg p-2 text-sm focus:outline-none focus:ring-1 focus:ring-gray-500 dark:bg-zinc-900 dark:text-gray-100"
-      >
-        <option value="">카테고리 전체</option>
-        <option value="english">영어</option>
-        <option value="math">수학</option>
-        <option value="science">과학</option>
-        <option value="coding">코딩</option>
-      </select>
+        setValue={setCategoryFilter}
+        options={categoryOptions}
+        width="w-35"
+      />
 
       {/* 검색창 */}
       <input

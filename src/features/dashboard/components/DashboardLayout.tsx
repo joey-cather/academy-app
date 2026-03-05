@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useRef, useState } from 'react';
 import { useMeQuery } from '../../auth/api/useMeQuery';
 import Link from 'next/link';
 
@@ -17,6 +17,25 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const [open, setOpen] = useState(false);
 
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: PointerEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener('pointerdown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('pointerdown', handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className="bg-white dark:bg-black">
       <div className="w-full min-w-md md:min-w-2xl lg:min-w-5xl flex flex-col">
@@ -26,7 +45,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               {me.name}님, 환영합니다!
             </h1>
 
-            <div className="relative inline-block">
+            <div ref={dropdownRef} className="relative inline-block">
               {/* 메인 버튼 */}
               <button
                 onClick={() => setOpen(!open)}
