@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import useRegisterForm from '../hooks/useRegisterForm';
 
-export function RegisterPage() {
+const RegisterPage = () => {
   const {
     register,
     handleSubmit,
@@ -99,4 +99,6 @@ export function RegisterPage() {
       </form>
     </div>
   );
-}
+};
+
+export default RegisterPage;

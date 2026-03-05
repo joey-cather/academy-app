@@ -7,7 +7,7 @@ import { useCallback } from 'react';
 import { queryClient } from '@/src/shared/api/queryClient';
 import { useNotification } from '../layouts/NotificationProvider';
 
-export function Header() {
+const Header = () => {
   const { accessToken } = useAuthStore();
 
   const { mutateAsync: logout } = useLogoutMutation();
@@ -58,19 +58,28 @@ export function Header() {
             </span>
           </Link>
           <nav className="flex items-center gap-4 text-sm text-zinc-700">
-            <Link href="/courses" className="hover:text-zinc-900">
+            <Link
+              href="/courses"
+              className="hover:text-zinc-900 hover:scale-105"
+            >
               강좌보기
             </Link>
-            <Link href="/instructors" className="hover:text-zinc-900">
+            <Link
+              href="/instructors"
+              className="hover:text-zinc-900 hover:scale-105"
+            >
               강사보기
             </Link>
             <button
               onClick={handleClickDashboard}
-              className="hover:text-zinc-900"
+              className="hover:text-zinc-900 hover:scale-105 cursor-pointer"
             >
               대시보드
             </button>
-            <Link href="/contact" className="hover:text-zinc-900">
+            <Link
+              href="/contact"
+              className="hover:text-zinc-900 hover:scale-105"
+            >
               문의하기
             </Link>
           </nav>
@@ -95,4 +104,6 @@ export function Header() {
       </div>
     </header>
   );
-}
+};
+
+export default Header;

@@ -1,5 +1,5 @@
-import { CourseFilter } from './CourseFilter';
-import { CourseList } from './CourseList';
+import CourseFilter from './CourseFilter';
+import CoursesList from './CoursesList';
 
 export default function CoursesPage() {
   return (
@@ -9,7 +9,7 @@ export default function CoursesPage() {
       </h1>
 
       <CourseFilter />
-      <CourseList />
+      <CoursesList />
     </div>
   );
 }

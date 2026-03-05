@@ -2,11 +2,11 @@
 
 import { useCoursesQuery } from '../api/useCoursesQuery';
 import { useSearchParams } from 'next/navigation';
-import { CourseCard } from './CourseCard';
+import CourseCard from './CourseCard';
 import { isCourseCategory } from '../types/type';
 import { useEffect } from 'react';
 
-export function CourseList() {
+const CoursesList = () => {
   const searchParams = useSearchParams();
 
   const rawCategory = searchParams.get('category');
@@ -81,4 +81,6 @@ export function CourseList() {
       {isFetchingNextPage && <div>Loading more...</div>}
     </div>
   );
-}
+};
+
+export default CoursesList;

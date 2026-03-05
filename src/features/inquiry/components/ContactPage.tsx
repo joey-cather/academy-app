@@ -5,7 +5,7 @@ import useContactForm from '../hooks/useContactForm';
 import { useMeQuery } from '@/src/features/auth/api/useMeQuery';
 import { useEffect } from 'react';
 
-export function ContactPage() {
+const ContactPage = () => {
   const {
     register,
     handleSubmit,
@@ -118,4 +118,6 @@ export function ContactPage() {
       </form>
     </div>
   );
-}
+};
+
+export default ContactPage;

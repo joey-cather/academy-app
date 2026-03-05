@@ -7,7 +7,7 @@ interface Props {
   course: Course;
 }
 
-export function CourseCard({ course }: Props) {
+const CourseCard = ({ course }: Props) => {
   return (
     <div className="rounded-xl bg-white p-6 shadow-sm ring-1 ring-zinc-200 dark:bg-zinc-900 dark:ring-zinc-800 hover:shadow-md transition">
       <Link href={`/courses/${course.id}`}>
@@ -39,4 +39,6 @@ export function CourseCard({ course }: Props) {
       </Link>
     </div>
   );
-}
+};
+
+export default CourseCard;

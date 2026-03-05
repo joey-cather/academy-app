@@ -1,4 +1,4 @@
-import { ContactPage } from '@/src/features/inquiry/components/ContactPage';
+import ContactPage from '@/src/features/inquiry/components/ContactPage';
 
 export default function Contact() {
   return (

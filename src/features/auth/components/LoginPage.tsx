@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import useLoginForm from '../hooks/useLoginForm';
 
-export function LoginPage() {
+const LoginPage = () => {
   const {
     register,
     handleSubmit,
@@ -68,4 +68,6 @@ export function LoginPage() {
       </form>
     </div>
   );
-}
+};
+
+export default LoginPage;

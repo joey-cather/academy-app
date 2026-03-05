@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from 'next/navigation';
 import { courseCategories } from '../types/type';
 import { useCallback } from 'react';
 
-export function CourseFilter() {
+const CourseFilter = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -33,7 +33,7 @@ export function CourseFilter() {
             !currentCategory
               ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
               : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200'
-          }`}
+          } cursor-pointer`}
         >
           전체
         </button>
@@ -49,7 +49,7 @@ export function CourseFilter() {
                 active
                   ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900'
                   : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200'
-              }`}
+              } cursor-pointer`}
             >
               {category}
             </button>
@@ -58,4 +58,6 @@ export function CourseFilter() {
       </div>
     </div>
   );
-}
+};
+
+export default CourseFilter;
