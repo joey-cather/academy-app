@@ -5,6 +5,8 @@ import { useNotification } from '@/src/shared/layouts/NotificationProvider';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import DashboardLayout from './DashboardLayout';
+import SearchBar from './SearchBar';
+import DashboardCoursesList from './DashboardCoursesList';
 
 const DashboardCoursesPage = () => {
   const { accessToken } = useAuthStore();
@@ -27,7 +29,13 @@ const DashboardCoursesPage = () => {
 
   return (
     <DashboardLayout>
-      <div className="max-w-5xl mx-auto px-4 py-6">/dashboard/courses</div>
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        {/* 검색/필터 바 */}
+        <SearchBar />
+
+        {/* 강좌 목록 */}
+        <DashboardCoursesList />
+      </div>
     </DashboardLayout>
   );
 };

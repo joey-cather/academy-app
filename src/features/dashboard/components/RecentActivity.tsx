@@ -36,7 +36,9 @@ export const RecentActivity = () => {
                     : `📘 수강 시작 - ${e.course.title}`}
                 </div>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {e.enrolledAt}
+                  {!e.completedAt
+                    ? `• 수강 시작: ${e.enrolledAt}`
+                    : `• 수강 완료: ${e.completedAt}`}
                 </span>
               </li>
             ))
