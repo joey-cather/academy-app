@@ -6,7 +6,7 @@ import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
 import { queryClient } from '@/src/shared/api/queryClient';
-import { useNotification } from '@/src/shared/layouts/NotificationProvider';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
 
 const useLoginForm = () => {
   const form = useForm<LoginFormValues>({

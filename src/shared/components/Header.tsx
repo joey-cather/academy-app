@@ -5,7 +5,7 @@ import { useLogoutMutation } from '@/src/features/auth/api/useLogoutMutation';
 import { useRouter } from 'next/navigation';
 import { useCallback } from 'react';
 import { queryClient } from '@/src/shared/api/queryClient';
-import { useNotification } from '../layouts/NotificationProvider';
+import { useNotification } from '../providers/NotificationProvider';
 
 const Header = () => {
   const { accessToken } = useAuthStore();

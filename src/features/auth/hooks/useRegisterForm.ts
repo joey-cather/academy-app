@@ -7,7 +7,7 @@ import {
 import { useRegisterMutation } from '../api/useRegisterMutation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { useNotification } from '@/src/shared/layouts/NotificationProvider';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
 
 const useRegisterForm = () => {
   const form = useForm<RegisterFormValues>({

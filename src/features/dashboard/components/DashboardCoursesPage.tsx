@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
-import { useNotification } from '@/src/shared/layouts/NotificationProvider';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 import DashboardLayout from './DashboardLayout';

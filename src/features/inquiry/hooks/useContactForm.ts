@@ -7,7 +7,7 @@ import {
 import { useContactMutation } from '../api/useContactMutation';
 import { useCallback } from 'react';
 import { useRouter } from 'next/navigation';
-import { useNotification } from '@/src/shared/layouts/NotificationProvider';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
 
 const useContactForm = () => {
   const form = useForm<ContactFormValues>({

@@ -6,7 +6,7 @@ import {
 } from '../schemas/profile.schema';
 import { useProfileMutation } from '../api/useProfileMutation';
 import { useCallback, useEffect } from 'react';
-import { useNotification } from '@/src/shared/layouts/NotificationProvider';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
 
 const useProfileForm = (userId?: number) => {
   const form = useForm<ProfileFormValues>({

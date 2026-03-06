@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { NotificationOptions } from '../layouts/NotificationProvider';
+import { NotificationOptions } from '../providers/NotificationProvider';
 
 interface Props extends NotificationOptions {
   onConfirm: () => void;

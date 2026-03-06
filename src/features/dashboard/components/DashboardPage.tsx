@@ -6,7 +6,7 @@ import { RecentActivity } from './RecentActivity';
 import { useAuthStore } from '@/src/shared/hooks/useAuthStore';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { useNotification } from '@/src/shared/layouts/NotificationProvider';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
 import DashboardLayout from './DashboardLayout';
 
 const DashboardPage = () => {

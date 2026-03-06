@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 import AppLayout from '../shared/layouts/AppLayout';
 import ReactQueryProvider from '../shared/providers/ReactQueryProvider';
-import { MSWProvider } from '../shared/layouts/MSWProvider';
-import { NotificationProvider } from '../shared/layouts/NotificationProvider';
+import { MSWProvider } from '../shared/providers/MSWProvider';
+import { NotificationProvider } from '../shared/providers/NotificationProvider';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
