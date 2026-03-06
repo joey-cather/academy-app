@@ -39,7 +39,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
   return (
     <div className="bg-white dark:bg-black">
       <div className="w-full min-w-md md:min-w-2xl lg:min-w-5xl flex flex-col">
-        <header className="bg-white dark:bg-black shadow-md px-4 pt-8">
+        <header className="bg-white dark:bg-black px-4 pt-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-3 lg:space-y-0">
             <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
               {me.name}님, 환영합니다!
