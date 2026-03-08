@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="ko-KR">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans bg-zinc-50 text-zinc-900`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased font-sans bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100`}
       >
         <MSWProvider>
           <ReactQueryProvider>
