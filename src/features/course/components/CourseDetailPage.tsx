@@ -8,13 +8,45 @@ import {
 } from '../api/useCourseDetailquery';
 import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
-import Head from 'next/head';
 import CourseInformation from './CourseInformation';
 import CurriculumList from './CurriculumList';
 import ReviewsList from './ReviewsList';
 import { useCreateEnrollmentMutation } from '../api/useCourseMutation';
 import { useNotification } from '@/src/shared/providers/NotificationProvider';
 import { useMeQuery } from '../../auth/api/useMeQuery';
+import { Metadata } from 'next';
+import { Course } from '../types/type';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { id: string };
+}): Promise<Metadata> {
+  const course: Course = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/courses/${params.id}`
+  ).then((res) => res.json());
+
+  return {
+    title: course.title,
+    description: course.description,
+
+    openGraph: {
+      title: course.title,
+      description: course.description,
+      url: `${process.env.NEXT_PUBLIC_API_URL}/${params.id}`,
+      siteName: 'Academy App',
+      images: course.thumbnail && [
+        {
+          url: course.thumbnail,
+          width: 1200,
+          height: 630,
+          alt: course.title,
+        },
+      ],
+      type: 'article',
+    },
+  };
+}
 
 const CourseDetailPage = () => {
   const params = useParams();
@@ -96,67 +128,43 @@ const CourseDetailPage = () => {
   }
 
   return (
-    <>
-      {/* SEO 메타태그 추가 */}
-      <Head>
-        <title>{courseDetail.title} - 강좌 상세</title>
-        <meta name="description" content={courseDetail.description} />
+    <div className="w-5xl mx-auto px-4 py-8">
+      <div className="mb-6">
+        <Link
+          href="/courses"
+          className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-zinc-700 rounded-lg px-4 py-2 inline-flex items-center transition-all duration-300 ease-in-out"
+        >
+          &larr; 강좌 목록으로 돌아가기
+        </Link>
+      </div>
 
-        {/* Open Graph */}
-        <meta property="og:title" content={courseDetail.title} />
-        <meta property="og:description" content={courseDetail.description} />
-        {courseDetail.thumbnail && (
-          <meta property="og:image" content={courseDetail.thumbnail} />
-        )}
-        <meta property="og:type" content="website" />
-
-        {/* Twitter 카드 */}
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={courseDetail.title} />
-        <meta name="twitter:description" content={courseDetail.description} />
-        {courseDetail.thumbnail && (
-          <meta name="twitter:image" content={courseDetail.thumbnail} />
-        )}
-      </Head>
-
-      <div className="w-5xl mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Link
-            href="/courses"
-            className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-zinc-700 rounded-lg px-4 py-2 inline-flex items-center transition-all duration-300 ease-in-out"
+      {/* 강좌 제목 */}
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
+          {courseDetail.title}
+        </h1>
+        {me && (
+          <button
+            onClick={() => handleRegisterEnrollment(me.id)}
+            className="text-sm font-medium text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg px-5 py-2.5 transition-all duration-300 ease-in-out"
           >
-            &larr; 강좌 목록으로 돌아가기
-          </Link>
-        </div>
+            수강 신청
+          </button>
+        )}
+      </div>
 
-        {/* 강좌 제목 */}
-        <div className="flex items-center justify-between mb-6">
-          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
-            {courseDetail.title}
-          </h1>
-          {me && (
-            <button
-              onClick={() => handleRegisterEnrollment(me.id)}
-              className="text-sm font-medium text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg px-5 py-2.5 transition-all duration-300 ease-in-out"
-            >
-              수강 신청
-            </button>
-          )}
-        </div>
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <CourseInformation />
 
-        <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          <CourseInformation />
+        <div className="lg:col-span-2">
+          {/* 커리큘럼 */}
+          <CurriculumList />
 
-          <div className="lg:col-span-2">
-            {/* 커리큘럼 */}
-            <CurriculumList />
-
-            {/* 수강 후기 */}
-            <ReviewsList />
-          </div>
+          {/* 수강 후기 */}
+          <ReviewsList />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
