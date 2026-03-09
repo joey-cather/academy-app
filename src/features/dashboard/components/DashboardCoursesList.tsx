@@ -6,13 +6,20 @@ import { useDashboardQuery } from '../api/useDashboardQuery';
 import { useSearchStore } from '../hooks/useSearchStore';
 import CircularProgressBar from './CircularProgressBar';
 import Image from 'next/image';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
+import { useDashboardMutation } from '../api/useDashboardMutation';
+import { useCallback } from 'react';
 
 const DashboardCoursesList = () => {
   const { data: me } = useMeQuery();
 
-  const { data, isLoading, isError } = useDashboardQuery(me?.id);
+  const { data, isLoading, isError, refetch } = useDashboardQuery(me?.id);
 
   const { statusFilter, categoryFilter, searchKeyword } = useSearchStore();
+
+  const { notify } = useNotification();
+
+  const { mutateAsync } = useDashboardMutation();
 
   if (isLoading) return <div>대시보드 로딩중...</div>;
   if (isError)
@@ -36,6 +43,29 @@ const DashboardCoursesList = () => {
         .includes(searchKeyword.toLowerCase());
     return matchStatus && matchCategory && matchKeyword;
   });
+
+  const handleCancelEnrollment = useCallback(
+    (enrollmentId: number) => {
+      notify({
+        type: 'confirm',
+        message: '수강을 취소하시겠습니까?',
+        onConfirm: async () => {
+          try {
+            await mutateAsync({ id: enrollmentId });
+            refetch();
+          } catch (error) {
+            if (error instanceof Error) {
+              notify({
+                type: 'alert',
+                message: error.message,
+              });
+            }
+          }
+        },
+      });
+    },
+    [notify, mutateAsync]
+  );
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">
@@ -95,13 +125,40 @@ const DashboardCoursesList = () => {
               </div>
 
               <div className="w-full sm:w-full lg:w-[15%] flex flex-col items-center gap-2">
-                <button className="w-32 px-3 py-1 bg-zinc-700 dark:bg-zinc-600 text-white rounded hover:bg-zinc-500 text-sm">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Link 클릭 막기
+                    e.preventDefault(); // 혹시 Link 기본 동작 막기
+                    notify({
+                      type: 'alert',
+                      message: '개발 예정입니다.',
+                    });
+                  }}
+                  className="w-32 px-3 py-1 bg-zinc-700 dark:bg-zinc-600 text-white rounded hover:bg-zinc-500 text-sm"
+                >
                   이어서 보기
                 </button>
-                <button className="w-32 px-3 py-1 bg-zinc-700 dark:bg-zinc-600 text-white rounded hover:bg-zinc-500 text-sm">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Link 클릭 막기
+                    e.preventDefault(); // 혹시 Link 기본 동작 막기
+                    notify({
+                      type: 'alert',
+                      message: '개발 예정입니다.',
+                    });
+                  }}
+                  className="w-32 px-3 py-1 bg-zinc-700 dark:bg-zinc-600 text-white rounded hover:bg-zinc-500 text-sm"
+                >
                   리뷰 작성
                 </button>
-                <button className="w-32 px-3 py-1 bg-rose-500 text-white rounded hover:bg-rose-400 text-sm">
+                <button
+                  onClick={(event) => {
+                    event.stopPropagation(); // Link 클릭 막기
+                    event.preventDefault(); // 혹시 Link 기본 동작 막기
+                    handleCancelEnrollment(e.id);
+                  }}
+                  className="w-32 px-3 py-1 bg-rose-500 text-white rounded hover:bg-rose-400 text-sm"
+                >
                   수강 취소
                 </button>
               </div>

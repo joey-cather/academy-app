@@ -1,4 +1,6 @@
 import {
+  DashboardDeleteEnrollmentRequest,
+  DashboardDeleteEnrollmentResponse,
   DashboardEnrollment,
   DashboardUpdateUserRequest,
   DashboardUpdateUserResponse,
@@ -73,6 +75,36 @@ export const dashboardHandlers = [
         data: {
           userId: userId,
           message: '회원 정보가 수정되었습니다.',
+        },
+      },
+      { status: 200 }
+    );
+  }),
+
+  http.post<
+    never,
+    DashboardDeleteEnrollmentRequest,
+    ApiResponse<DashboardDeleteEnrollmentResponse> | ApiErrorResponse
+  >('/api/dashboard/delete/enrollment', async ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+
+    const token = decodeToken(authHeader);
+
+    if (!token) {
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { id: enrollmentId } = await request.json();
+
+    const index = enrollments.findIndex((item) => item.id === enrollmentId);
+    if (index !== -1) {
+      enrollments.splice(index, 1);
+    }
+
+    return HttpResponse.json(
+      {
+        data: {
+          message: '해당 수강이 삭제되었습니다.',
         },
       },
       { status: 200 }

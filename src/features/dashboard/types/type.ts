@@ -25,3 +25,11 @@ export interface DashboardUpdateUserResponse {
   userId: number;
   message?: string;
 }
+
+export interface DashboardDeleteEnrollmentRequest {
+  id: number;
+}
+
+export interface DashboardDeleteEnrollmentResponse {
+  message?: string;
+}
