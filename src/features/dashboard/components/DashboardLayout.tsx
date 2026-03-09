@@ -9,12 +9,6 @@ interface DashboardLayoutProps {
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
   const { data: me, isLoading, isError } = useMeQuery();
 
-  if (isLoading) return <p className="text-center mt-8">로딩 중...</p>;
-  if (isError)
-    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
-
-  if (!me) return <div>로그인이 필요합니다.</div>;
-
   const [open, setOpen] = useState(false);
 
   const dropdownRef = useRef<HTMLDivElement>(null);
@@ -35,6 +29,12 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       document.removeEventListener('pointerdown', handleClickOutside);
     };
   }, []);
+
+  if (isLoading) return <p className="text-center mt-8">로딩 중...</p>;
+  if (isError)
+    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
+
+  if (!me) return <div>로그인이 필요합니다.</div>;
 
   return (
     <div className="bg-white dark:bg-black">
