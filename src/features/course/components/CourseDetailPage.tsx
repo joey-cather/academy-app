@@ -14,39 +14,6 @@ import ReviewsList from './ReviewsList';
 import { useCreateEnrollmentMutation } from '../api/useCourseMutation';
 import { useNotification } from '@/src/shared/providers/NotificationProvider';
 import { useMeQuery } from '../../auth/api/useMeQuery';
-import { Metadata } from 'next';
-import { Course } from '../types/type';
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { id: string };
-}): Promise<Metadata> {
-  const course: Course = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/courses/${params.id}`
-  ).then((res) => res.json());
-
-  return {
-    title: course.title,
-    description: course.description,
-
-    openGraph: {
-      title: course.title,
-      description: course.description,
-      url: `${process.env.NEXT_PUBLIC_API_URL}/${params.id}`,
-      siteName: 'Academy App',
-      images: course.thumbnail && [
-        {
-          url: course.thumbnail,
-          width: 1200,
-          height: 630,
-          alt: course.title,
-        },
-      ],
-      type: 'article',
-    },
-  };
-}
 
 const CourseDetailPage = () => {
   const params = useParams();
