@@ -14,6 +14,10 @@ const CoursesList = () => {
   const category =
     rawCategory && isCourseCategory(rawCategory) ? rawCategory : undefined;
 
+  const rawKeyword = searchParams.get('keyword');
+
+  const keyword = rawKeyword ? rawKeyword : undefined;
+
   const {
     data,
     isLoading,
@@ -23,6 +27,7 @@ const CoursesList = () => {
     isFetchingNextPage,
   } = usePaginatedCoursesQuery({
     category,
+    keyword,
   });
 
   const courses = data?.pages.flatMap((page) => page.items) ?? [];

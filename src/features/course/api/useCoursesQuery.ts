@@ -30,6 +30,7 @@ export const getPaginatedCourses = async (
 
 export const usePaginatedCoursesQuery = (params: {
   category?: CourseCategory;
+  keyword?: string;
 }) => {
   const newParams = { ...params, page: 1, pageSize: 20 };
 

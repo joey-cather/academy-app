@@ -53,10 +53,30 @@ export const courseHandlers = [
     );
     const rawCategory = searchParams.get('category') ?? undefined;
 
-    const filtered =
-      rawCategory && isCourseCategory(rawCategory)
-        ? courses.filter((course) => course.category === rawCategory)
+    const rawKeyword = searchParams.get('keyword') ?? undefined;
+
+    const filtered1 =
+      rawCategory && isCourseCategory(rawCategory) && rawKeyword
+        ? courses.filter((course) => {
+            const matchCategory = course.category === rawCategory;
+            const matchKeyword = course.title
+              .toLowerCase()
+              .includes(rawKeyword.toLowerCase());
+            return matchCategory && matchKeyword;
+          })
         : courses;
+    const filtered = courses.filter((course) => {
+      const matchCategory =
+        rawCategory && isCourseCategory(rawCategory)
+          ? course.category === rawCategory
+          : true; // category 조건이 없으면 항상 true
+
+      const matchKeyword = rawKeyword
+        ? course.title.toLowerCase().includes(rawKeyword.toLowerCase())
+        : true; // keyword 조건이 없으면 항상 true
+
+      return matchCategory && matchKeyword;
+    });
 
     const total = filtered.length;
     const totalPages = Math.max(1, Math.ceil(total / pageSize));

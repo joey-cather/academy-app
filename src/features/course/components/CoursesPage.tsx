@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import CourseFilter from './CourseFilter';
 import CoursesList from './CoursesList';
+import CourseSearch from './CourseSearch';
 
 export default function CoursesPage() {
   useEffect(() => {
@@ -16,6 +17,7 @@ export default function CoursesPage() {
       </h1>
 
       <CourseFilter />
+      <CourseSearch />
       <CoursesList />
     </div>
   );
