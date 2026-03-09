@@ -7,13 +7,38 @@ import { http, HttpResponse } from 'msw';
 import { courses, curriculum, reviews } from '../data/courses';
 import {
   Course,
+  CourseWithInstructor,
   CurriculumItem,
   isCourseCategory,
   Review,
 } from '@/src/features/course/types/type';
+import { instructors } from '../data/instructors';
 
 export const courseHandlers = [
-  // 강좌 목록 조회
+  // 주요 강좌 목록 조회
+  http.get<
+    never,
+    never,
+    ApiResponse<CourseWithInstructor[]> | ApiErrorResponse
+  >('/api/courses/major', () => {
+    const shuffled = [...courses].sort(() => Math.random() - 0.5); // 배열 섞기
+    const majorCourses = shuffled
+      .slice(0, 3) // 앞에서 3개 가져오기
+      .map((c) => {
+        const instructor = instructors.find((i) => i.id === c.instructorId);
+        if (!instructor) return null;
+
+        return {
+          ...c,
+          instructor,
+        };
+      })
+      .filter((item): item is CourseWithInstructor => item !== null);
+
+    return HttpResponse.json({ data: majorCourses }, { status: 200 });
+  }),
+
+  // 강좌 목록 조회 (페이징)
   http.get<
     never,
     never,

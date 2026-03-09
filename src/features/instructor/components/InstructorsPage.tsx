@@ -2,9 +2,14 @@
 
 import Image from 'next/image';
 import { useInstructorsQuery } from '../api/useInstructorsQuery';
+import { useEffect } from 'react';
 
 export default function InstructorsPage() {
   const { data: instructors, isLoading, isError } = useInstructorsQuery();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading) return <p className="text-center mt-8">로딩 중...</p>;
   if (isError)

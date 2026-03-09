@@ -1,6 +1,6 @@
 'use client';
 
-import { useCoursesQuery } from '../api/useCoursesQuery';
+import { usePaginatedCoursesQuery } from '../api/useCoursesQuery';
 import { useSearchParams } from 'next/navigation';
 import CourseCard from './CourseCard';
 import { isCourseCategory } from '../types/type';
@@ -21,7 +21,7 @@ const CoursesList = () => {
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useCoursesQuery({
+  } = usePaginatedCoursesQuery({
     category,
   });
 
