@@ -14,7 +14,7 @@ export const ProgressSummary = () => {
   const total = data?.length ?? 0;
   const completed = data?.filter((e) => e.status === 'completed').length ?? 0;
   const active = data?.filter((e) => e.status === 'active').length ?? 0;
-  const avg = data?.reduce((a, c) => a + c.progress, 0) ?? 0 / total;
+  const avg = (data?.reduce((a, c) => a + c.progress, 0) ?? 0) / total;
 
   return (
     <section className="bg-zinc-50 dark:bg-zinc-800 p-6 shadow-xl rounded-2xl mb-8">
@@ -45,7 +45,7 @@ export const ProgressSummary = () => {
             평균 진도율
           </p>
           <p className="text-3xl font-bold text-gray-800 dark:text-gray-100">
-            {avg != null && !isNaN(avg) ? Math.round(avg) : 0}%
+            {avg != null && !isNaN(avg) && isFinite(avg) ? Math.round(avg) : 0}%
           </p>
         </div>
       </div>
