@@ -17,9 +17,24 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(
+    process.env.NEXT_PUBLIC_SITE_URL ?? 'https://academy-app-deploy.vercel.app'
+  ),
   title: '아카데미 앱 | 온라인 학습 플랫폼',
   description:
     '온라인으로 강의를 수강하고, 학습 진도를 관리할 수 있는 아카데미 플랫폼입니다.',
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    title: '아카데미 앱 | 온라인 학습 플랫폼',
+    description:
+      '온라인으로 강의를 수강하고, 학습 진도를 관리할 수 있는 아카데미 플랫폼입니다.',
+    url: '/',
+    siteName: 'Academy App',
+    locale: 'ko_KR',
+    type: 'website',
+  },
 };
 
 export default function RootLayout({
