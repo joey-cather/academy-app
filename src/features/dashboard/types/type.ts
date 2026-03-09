@@ -26,6 +26,16 @@ export interface DashboardUpdateUserResponse {
   message?: string;
 }
 
+export interface DashboardCreateEnrollmentRequest {
+  userId: number;
+  courseId: number;
+}
+
+export interface DashboardCreateEnrollmentResponse {
+  enrollmentId: number;
+  message?: string;
+}
+
 export interface DashboardDeleteEnrollmentRequest {
   id: number;
 }

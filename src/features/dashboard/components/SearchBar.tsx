@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect } from 'react';
 import { useSearchStore } from '../hooks/useSearchStore';
 import SelectBox from './SelectBox';
 
@@ -27,6 +28,12 @@ const SearchBar = () => {
     { label: '과학', value: 'science' },
     { label: '코딩', value: 'coding' },
   ];
+
+  useEffect(() => {
+    setStatusFilter('');
+    setCategoryFilter('');
+    setSearchKeyword('');
+  }, [setStatusFilter, setCategoryFilter, setSearchKeyword]);
 
   return (
     <div className="flex flex-col sm:flex-row gap-3 bg-zinc-50 dark:bg-zinc-800 p-4 rounded-xl shadow-md items-center mb-8">

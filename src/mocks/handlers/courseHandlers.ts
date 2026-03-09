@@ -13,6 +13,13 @@ import {
   Review,
 } from '@/src/features/course/types/type';
 import { instructors } from '../data/instructors';
+import { decodeToken } from '../utils/util';
+import { enrollments } from '../data/enrollments';
+import {
+  DashboardCreateEnrollmentRequest,
+  DashboardCreateEnrollmentResponse,
+  Enrollment,
+} from '@/src/features/dashboard/types/type';
 
 export const courseHandlers = [
   // 주요 강좌 목록 조회
@@ -158,4 +165,54 @@ export const courseHandlers = [
       );
     }
   ),
+
+  http.post<
+    never,
+    DashboardCreateEnrollmentRequest,
+    ApiResponse<DashboardCreateEnrollmentResponse> | ApiErrorResponse
+  >('/api/courses/create/enrollment', async ({ request }) => {
+    const authHeader = request.headers.get('Authorization');
+
+    const token = decodeToken(authHeader);
+
+    if (!token) {
+      return HttpResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { userId, courseId } = await request.json();
+    const exists = enrollments.some(
+      (e) => e.userId === userId && e.courseId === courseId
+    );
+
+    if (exists) {
+      return HttpResponse.json(
+        { message: '이미 수강 중입니다.' },
+        { status: 404 }
+      );
+    }
+
+    const newEnrollmentId = enrollments.length + 1;
+    const enrolledAt = new Date(Date.now());
+    const formattedDate = enrolledAt.toISOString().split('T')[0];
+
+    const newEnrollment: Enrollment = {
+      id: newEnrollmentId,
+      userId,
+      courseId,
+      progress: 0,
+      status: 'active',
+      enrolledAt: formattedDate,
+    };
+    enrollments.push(newEnrollment);
+
+    return HttpResponse.json(
+      {
+        data: {
+          enrollmentId: newEnrollmentId,
+          message: '수강 신청이 완료되었습니다.',
+        },
+      },
+      { status: 200 }
+    );
+  }),
 ];

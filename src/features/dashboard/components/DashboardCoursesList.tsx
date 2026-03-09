@@ -21,29 +21,6 @@ const DashboardCoursesList = () => {
 
   const { mutateAsync } = useDashboardMutation();
 
-  if (isLoading) return <div>대시보드 로딩중...</div>;
-  if (isError)
-    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
-
-  const sortedEnrollments =
-    data?.sort(
-      (a, b) =>
-        new Date(b.enrolledAt).getTime() - new Date(a.enrolledAt).getTime()
-    ) ?? [];
-
-  const filtered = sortedEnrollments.filter((e) => {
-    const matchStatus = statusFilter ? e.status === statusFilter : true;
-    const matchCategory = categoryFilter
-      ? e.course.category === categoryFilter
-      : true;
-    const matchKeyword =
-      e.course.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
-      e.course.instructor.name
-        .toLowerCase()
-        .includes(searchKeyword.toLowerCase());
-    return matchStatus && matchCategory && matchKeyword;
-  });
-
   const handleCancelEnrollment = useCallback(
     (enrollmentId: number) => {
       notify({
@@ -66,6 +43,29 @@ const DashboardCoursesList = () => {
     },
     [notify, mutateAsync]
   );
+
+  if (isLoading) return <div>대시보드 로딩중...</div>;
+  if (isError)
+    return <p className="text-center mt-8 text-red-600">오류 발생</p>;
+
+  const sortedEnrollments =
+    data?.sort(
+      (a, b) =>
+        new Date(b.enrolledAt).getTime() - new Date(a.enrolledAt).getTime()
+    ) ?? [];
+
+  const filtered = sortedEnrollments.filter((e) => {
+    const matchStatus = statusFilter ? e.status === statusFilter : true;
+    const matchCategory = categoryFilter
+      ? e.course.category === categoryFilter
+      : true;
+    const matchKeyword =
+      e.course.title.toLowerCase().includes(searchKeyword.toLowerCase()) ||
+      e.course.instructor.name
+        .toLowerCase()
+        .includes(searchKeyword.toLowerCase());
+    return matchStatus && matchCategory && matchKeyword;
+  });
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-5">

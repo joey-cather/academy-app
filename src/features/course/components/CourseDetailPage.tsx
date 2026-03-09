@@ -6,12 +6,15 @@ import {
   useCurriculumQuery,
   useReviewsQuery,
 } from '../api/useCourseDetailquery';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import Head from 'next/head';
 import CourseInformation from './CourseInformation';
 import CurriculumList from './CurriculumList';
 import ReviewsList from './ReviewsList';
+import { useCreateEnrollmentMutation } from '../api/useCourseMutation';
+import { useNotification } from '@/src/shared/providers/NotificationProvider';
+import { useMeQuery } from '../../auth/api/useMeQuery';
 
 const CourseDetailPage = () => {
   const params = useParams();
@@ -20,6 +23,8 @@ const CourseDetailPage = () => {
   if (typeof id !== 'string') {
     return <div>Invalid course ID</div>;
   }
+
+  const { data: me } = useMeQuery();
 
   const {
     data: courseDetail,
@@ -33,9 +38,43 @@ const CourseDetailPage = () => {
   const { isLoading: isReviewsLoading, isError: isReviewsError } =
     useReviewsQuery(id);
 
+  const { notify } = useNotification();
+
+  const { mutateAsync } = useCreateEnrollmentMutation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  const handleRegisterEnrollment = useCallback(
+    (userId: number) => {
+      notify({
+        type: 'confirm',
+        message: '수강을 신청하시겠습니까?',
+        onConfirm: async () => {
+          try {
+            const response = await mutateAsync({
+              userId,
+              courseId: Number(id),
+            });
+
+            notify({
+              type: 'alert',
+              message: response.message ?? '',
+            });
+          } catch (error) {
+            if (error instanceof Error) {
+              notify({
+                type: 'alert',
+                message: error.message,
+              });
+            }
+          }
+        },
+      });
+    },
+    [notify, mutateAsync]
+  );
 
   const isLoading = isCourseLoading || isCurriculumLoading || isReviewsLoading;
   const isError = isCourseError || isCurriculumError || isReviewsError;
@@ -91,9 +130,19 @@ const CourseDetailPage = () => {
         </div>
 
         {/* 강좌 제목 */}
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100 mb-6">
-          {courseDetail.title}
-        </h1>
+        <div className="flex items-center justify-between mb-6">
+          <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
+            {courseDetail.title}
+          </h1>
+          {me && (
+            <button
+              onClick={() => handleRegisterEnrollment(me.id)}
+              className="text-sm font-medium text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg px-5 py-2.5 transition-all duration-300 ease-in-out"
+            >
+              수강 신청
+            </button>
+          )}
+        </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
           <CourseInformation />
