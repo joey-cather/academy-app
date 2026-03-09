@@ -41,7 +41,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       <div className="w-full min-w-md md:min-w-2xl lg:min-w-5xl flex flex-col">
         <header className="bg-white dark:bg-black px-4 pt-8">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between space-y-3 lg:space-y-0">
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
+            <h1 className="text-2xl font-bold text-zinc-800 dark:text-white">
               {me.name}님, 환영합니다!
             </h1>
 
@@ -49,7 +49,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               {/* 메인 버튼 */}
               <button
                 onClick={() => setOpen(!open)}
-                className={`w-auto text-sm font-medium text-gray-800 dark:text-gray-200 bg-gray-100 dark:bg-zinc-700 rounded-lg px-4 py-2 inline-flex justify-between items-center transition-all duration-200 ease-in-out ${open ? 'bg-gray-200 dark:bg-zinc-600 shadow-md scale-105' : 'hover:bg-gray-200 dark:hover:bg-zinc-600'}`}
+                className={`inline-flex w-auto items-center justify-between rounded-lg bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-800 transition-colors duration-200 dark:bg-zinc-700 dark:text-zinc-200 ${open ? 'bg-zinc-200 shadow-md dark:bg-zinc-600' : 'hover:bg-zinc-200 dark:hover:bg-zinc-600'}`}
               >
                 대시보드 {open ? '▲' : '▼'}
               </button>
@@ -61,21 +61,21 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               >
                 <Link
                   href="/dashboard"
-                  className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-600"
+                  className="block px-4 py-2 text-zinc-800 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-600"
                   onClick={() => setOpen(false)}
                 >
                   📊 대시보드
                 </Link>
                 <Link
                   href="/dashboard/courses"
-                  className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-600"
+                  className="block px-4 py-2 text-zinc-800 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-600"
                   onClick={() => setOpen(false)}
                 >
                   📚 수강 관리
                 </Link>
                 <Link
                   href="/dashboard/profile"
-                  className="block px-4 py-2 text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-zinc-600"
+                  className="block px-4 py-2 text-zinc-800 transition-colors hover:bg-zinc-100 dark:text-zinc-200 dark:hover:bg-zinc-600"
                   onClick={() => setOpen(false)}
                 >
                   👤 마이페이지

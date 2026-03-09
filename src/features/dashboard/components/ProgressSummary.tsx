@@ -18,33 +18,33 @@ export const ProgressSummary = () => {
 
   return (
     <section className="bg-zinc-50 dark:bg-zinc-800 p-6 shadow-xl rounded-2xl mb-8">
-      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-6">
+      <h2 className="mb-6 text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
         진도 요약
       </h2>
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center">
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">총 강좌</p>
-          <p className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">총 강좌</p>
+          <p className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
             {total}
           </p>
         </div>
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">진행 중</p>
-          <p className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">진행 중</p>
+          <p className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
             {active}
           </p>
         </div>
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">완료</p>
-          <p className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">완료</p>
+          <p className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
             {completed}
           </p>
         </div>
         <div>
-          <p className="text-sm text-gray-500 dark:text-gray-400">
+          <p className="text-sm text-zinc-500 dark:text-zinc-400">
             평균 진도율
           </p>
-          <p className="text-3xl font-bold text-gray-800 dark:text-gray-100">
+          <p className="text-3xl font-bold text-zinc-800 dark:text-zinc-100">
             {avg != null && !isNaN(avg) && isFinite(avg) ? Math.round(avg) : 0}%
           </p>
         </div>

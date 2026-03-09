@@ -88,7 +88,7 @@ const CourseDetailPage = () => {
 
   if (!courseDetail) {
     return (
-      <p className="text-center mt-8 text-gray-600">
+      <p className="mt-8 text-center text-zinc-600 dark:text-zinc-400">
         데이터가 없습니다. 다시 시도해 주세요.
       </p>
     );
@@ -99,7 +99,7 @@ const CourseDetailPage = () => {
       <div className="mb-6">
         <Link
           href="/courses"
-          className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-gray-900 dark:hover:text-white bg-gray-100 dark:bg-zinc-700 rounded-lg px-4 py-2 inline-flex items-center transition-all duration-300 ease-in-out"
+          className="inline-flex items-center rounded-lg bg-zinc-100 px-4 py-2 text-sm font-medium text-zinc-800 transition-colors hover:bg-zinc-200 hover:text-zinc-900 dark:bg-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-600 dark:hover:text-white"
         >
           &larr; 강좌 목록으로 돌아가기
         </Link>
@@ -107,13 +107,13 @@ const CourseDetailPage = () => {
 
       {/* 강좌 제목 */}
       <div className="flex items-center justify-between mb-6">
-        <h1 className="text-4xl font-extrabold text-gray-900 dark:text-gray-100">
+        <h1 className="text-4xl font-extrabold text-zinc-900 dark:text-zinc-100">
           {courseDetail.title}
         </h1>
         {me && (
           <button
             onClick={() => handleRegisterEnrollment(me.id)}
-            className="text-sm font-medium text-white bg-gray-900 dark:bg-gray-100 dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-200 rounded-lg px-5 py-2.5 transition-all duration-300 ease-in-out"
+            className="rounded-lg bg-zinc-900 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-zinc-200"
           >
             수강 신청
           </button>

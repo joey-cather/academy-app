@@ -111,7 +111,7 @@ const Header = () => {
             aria-label={
               theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'
             }
-            className="rounded-full border border0zinc-300 p-2 text-zinc-700 shadow-sm hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
+            className="rounded-full border border-zinc-300 p-2 text-zinc-700 shadow-sm transition-colors hover:bg-zinc-100 dark:border-zinc-700 dark:text-zinc-200 dark:hover:bg-zinc-800"
           >
             {theme === 'dark' ? (
               <svg

@@ -23,7 +23,7 @@ const CurriculumList = () => {
 
   return (
     <section className="curriculum bg-zinc-50 dark:bg-zinc-800 p-6 shadow-lg rounded-xl mb-8">
-      <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-100 mb-4">
+      <h2 className="mb-4 text-2xl font-semibold text-zinc-800 dark:text-zinc-100">
         커리큘럼
       </h2>
       <ul className="space-y-6">
@@ -31,15 +31,15 @@ const CurriculumList = () => {
           visibleCurriculum.map((item) => (
             <li
               key={item.id}
-              className="bg-zinc-100 dark:bg-zinc-700 p-4 rounded-lg shadow-sm hover:shadow-lg transition"
+              className="rounded-lg bg-zinc-100 p-4 shadow-sm transition-shadow hover:shadow-lg dark:bg-zinc-700"
             >
-              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-200">
+              <h3 className="text-xl font-semibold text-zinc-800 dark:text-zinc-200">
                 {item.title}
               </h3>
-              <p className="text-gray-700 dark:text-gray-300">
+              <p className="text-zinc-700 dark:text-zinc-300">
                 {item.description}
               </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">
                 {item.duration}
               </p>
             </li>
@@ -52,7 +52,7 @@ const CurriculumList = () => {
           <div className="flex justify-center mt-6">
             <button
               onClick={() => setShowCurriculumAll(true)}
-              className="px-6 py-2 text-base bg-gray-900 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out hover:bg-gray-700"
+              className="rounded-full bg-zinc-900 px-6 py-2 text-base text-white shadow-md transition-colors hover:bg-zinc-700"
             >
               더 보기
             </button>
