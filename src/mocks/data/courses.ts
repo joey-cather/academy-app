@@ -7,7 +7,7 @@ import {
 } from '@/src/features/course/types/type';
 import { randomDate, randomPrice, randomThumbnail } from '../utils/util';
 
-// /courses 화면에서 무한 스크롤 테스트용!
+//courses 화면에서 무한 스크롤 테스트용!
 // export const courses: Course[] = Array.from({ length: 150 }, (_, i) => {
 //   const category = courseCategories[i % courseCategories.length];
 //   const level = courseLevels[i % courseLevels.length];
@@ -43,7 +43,7 @@ export const courses: Course[] = [
   {
     id: 2,
     title: 'React 심화',
-    description: 'React 프로젝트 개발',
+    description: 'React 프로젝트 개발과 상태 관리',
     category: 'coding',
     level: 'intermediate',
     price: 300000,
@@ -54,8 +54,8 @@ export const courses: Course[] = [
   },
   {
     id: 3,
-    title: 'Python 데이터 분석',
-    description: 'Python과 pandas 활용',
+    title: '기초 영어 회화',
+    description: '일상에서 바로 쓰는 영어 표현 학습',
     category: 'english',
     level: 'beginner',
     price: 250000,
@@ -66,8 +66,8 @@ export const courses: Course[] = [
   },
   {
     id: 4,
-    title: 'UI/UX 디자인',
-    description: '디자인 기초부터 실무까지',
+    title: '기초 수학 개념',
+    description: '대수와 함수의 기본 개념 이해',
     category: 'math',
     level: 'beginner',
     price: 180000,
@@ -78,8 +78,8 @@ export const courses: Course[] = [
   },
   {
     id: 5,
-    title: '머신러닝 입문',
-    description: '기초 ML 알고리즘 학습',
+    title: '기초 과학 원리',
+    description: '물리와 화학의 핵심 개념 이해',
     category: 'science',
     level: 'beginner',
     price: 350000,
@@ -91,7 +91,7 @@ export const courses: Course[] = [
   {
     id: 6,
     title: 'Node.js 백엔드 개발',
-    description: 'Express로 서버 구축',
+    description: 'Express 기반 REST API 서버 구축',
     category: 'coding',
     level: 'intermediate',
     price: 280000,
