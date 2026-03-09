@@ -37,6 +37,7 @@ export default function InstructorsPage() {
                   src={instructor.profileImage}
                   alt={instructor.name}
                   fill
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                   className="object-cover"
                   unoptimized={true} // SVG 안전하게 렌더링
                 />

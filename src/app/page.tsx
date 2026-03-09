@@ -184,6 +184,7 @@ export default function Home() {
                       src={instructor.profileImage}
                       alt={instructor.name}
                       fill
+                      sizes="64px"
                       className=""
                       unoptimized={true} // SVG 안전하게 렌더링
                     />

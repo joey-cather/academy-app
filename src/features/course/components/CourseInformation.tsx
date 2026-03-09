@@ -31,6 +31,7 @@ const CourseInformation = () => {
             src={courseDetail.thumbnail}
             alt={courseDetail.title}
             fill
+            sizes="(max-width: 1024px) 100vw, 60vw"
             className="object-cover"
           />
         </div>

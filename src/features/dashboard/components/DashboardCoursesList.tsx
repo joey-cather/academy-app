@@ -79,6 +79,7 @@ const DashboardCoursesList = () => {
                     src={e.course.thumbnail ?? '/placeholder.png'}
                     alt={e.course.title}
                     fill
+                    sizes="(max-width: 640px) 10rem, (max-width: 1024px) 11rem, 12rem"
                     className="object-cover"
                   />
                 </div>
@@ -97,6 +98,7 @@ const DashboardCoursesList = () => {
                       src={e.course.instructor.profileImage}
                       alt={e.course.instructor.name}
                       fill
+                      sizes="24px"
                       className="object-cover"
                       unoptimized={true} // SVG 안전하게 렌더링
                     />

@@ -39,6 +39,7 @@ export const ActiveCourses = () => {
                         src={e.course.instructor.profileImage}
                         alt={e.course.instructor.name}
                         fill
+                        sizes="24px"
                         className="object-cover"
                         unoptimized={true} // SVG 안전하게 렌더링
                       />
