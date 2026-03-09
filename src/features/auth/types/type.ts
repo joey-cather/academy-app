@@ -8,7 +8,9 @@ export interface LoginResponse {
   accessToken: string;
 }
 
-export type LogoutRequest = Record<string, any>;
+export type LogoutRequest = {
+  success: boolean;
+};
 
 export interface LogoutResponse {
   success: boolean;
